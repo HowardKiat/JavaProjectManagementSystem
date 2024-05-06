@@ -6,10 +6,8 @@ package com.mycompany.javaprojectmanagementsystem;
 
 /**
  *
- * @author limji
+ * @author User
  */
-public class teste {
-    public static void main(String[] args) {
-        
-    }
+public class kukubird {
+//    coocoobird im ging coo coo
 }
