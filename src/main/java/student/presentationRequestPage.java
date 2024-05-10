@@ -23,10 +23,11 @@ public class presentationRequestPage extends javax.swing.JFrame {
         private final String endTime;
         private final String supervisee;
         private final String status;
+        private final String reason;
         private final LocalDateTime presentationDate;   
     
     
-    public presentationRequest(String name, String email, String topic, String startTime, String endTime, String supervisee, String status, LocalDateTime presentationDate) {
+    public presentationRequest(String name, String email, String topic, String startTime, String endTime, String supervisee, String status, String reason, LocalDateTime presentationDate) {
         this.name = name;
         this.email = email;
         this.topic = topic;
@@ -34,12 +35,13 @@ public class presentationRequestPage extends javax.swing.JFrame {
         this.endTime = endTime;
         this.supervisee = supervisee;
         this.status = status;
+        this.reason = reason;
         this.presentationDate = presentationDate;
     }
     
     @Override
     public String toString() {
-        return "Name: " + name + ", Email: " + email + ", Topic: " + topic + ", Start Time: " + startTime + ", End Time: " + endTime + ", Supervisee: " + supervisee + ", Presentation Date: " + presentationDate + ", Status: " + status;
+        return "Name: " + name + ", Email: " + email + ", Topic: " + topic + ", Start Time: " + startTime + ", End Time: " + endTime + ", Supervisee: " + supervisee + ", Presentation Date: " + presentationDate + ", Status: " + status + ", Reason: " + reason;
     }
 }
     /**
@@ -69,12 +71,13 @@ public class presentationRequestPage extends javax.swing.JFrame {
         String topic = topicField.getText();
         String startTime = (String) jComboBox2.getSelectedItem();
         String endTime = (String) jComboBox3.getSelectedItem();
+        String reason = reasonField.getText();
         String selectSupervisee = (String) jComboBox1.getSelectedItem();
         
         java.util.Date selectedDate = jDateChooser1.getDate();
 
         // To Check if fields are empty
-        if (name.isEmpty() || email.isEmpty() || topic.isEmpty() || selectedDate == null) {
+        if (name.isEmpty() || email.isEmpty() || topic.isEmpty() || reason.isEmpty() || selectedDate == null) {
             JOptionPane.showMessageDialog(this, "Please fill in all the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -88,7 +91,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
         LocalDateTime presentationDate = LocalDateTime.ofInstant(selectedDate.toInstant(), java.time.ZoneId.systemDefault());
 
         //Request Presentation
-        presentationRequest pr = new presentationRequest(name, email, topic, startTime, endTime, selectSupervisee, statusField.getText(), presentationDate);
+        presentationRequest pr = new presentationRequest(name, email, topic, startTime, endTime, selectSupervisee, statusField.getText(), reason, presentationDate);
         
         //Saves the request and validate the request
         if (savePresentationRequest(pr)) {
