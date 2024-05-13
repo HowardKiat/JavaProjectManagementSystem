@@ -5,7 +5,6 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import com.mycompany.javaprojectmanagementsystem.home;
-import com.mycompany.javaprojectmanagementsystem.home;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.io.BufferedReader;
@@ -76,7 +75,6 @@ public class admin extends javax.swing.JFrame {
             }
         }
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
