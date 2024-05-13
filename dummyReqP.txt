@@ -1,0 +1,3 @@
+12345,John Doe,Fall 2023,Computer Science,Project A,2023-05-20,09:00,10:00,Final Presentation,Dr. Smith,Pending
+67890,Jane Smith,Spring 2022,Electrical Engineering,Project B,2023-06-15,14:00,15:00,Project Review,Prof. Johnson,Approved
+54321,Alice Johnson,Fall 2023,Data Science,Project C,2023-07-10,11:00,12:00,Research Proposal,Dr. Williams,Rejected
