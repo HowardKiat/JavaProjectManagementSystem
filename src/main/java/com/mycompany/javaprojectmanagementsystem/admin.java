@@ -4,6 +4,8 @@
  */
 package com.mycompany.javaprojectmanagementsystem;
 
+import com.mycompany.javaprojectmanagementsystem.home;
+import com.mycompany.javaprojectmanagementsystem.home;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.io.BufferedReader;
@@ -11,6 +13,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -26,9 +32,7 @@ public class admin extends javax.swing.JFrame {
      */
     public admin() {
         initComponents();
-//        loadLecDataFromFile(); //Load data when the application starts
-//        loadStdDataFromFile();
-        loadDataFromFile("lecturer.txt", lecTable, lecTable1);
+        loadDataFromFile("lecturer.txt", lecTable);
         loadDataFromFile("student.txt", stdTable);
     }
     
@@ -167,24 +171,22 @@ public class admin extends javax.swing.JFrame {
         lecContact2 = new javax.swing.JTextField();
         jLabel58 = new javax.swing.JLabel();
         lecDesignation2 = new javax.swing.JComboBox<>();
-        lecRegister2 = new javax.swing.JButton();
+        lecEdit = new javax.swing.JButton();
         backB3 = new javax.swing.JButton();
-        lecPassword2 = new javax.swing.JPasswordField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        lecTable2 = new javax.swing.JTable();
+        lecPassword2 = new javax.swing.JTextField();
+        tfLecSearch = new javax.swing.JTextField();
+        jLabel68 = new javax.swing.JLabel();
+        lecSearch = new javax.swing.JButton();
         p1_allotPM = new javax.swing.JPanel();
         header4 = new javax.swing.JPanel();
         jLabel59 = new javax.swing.JLabel();
-        jLabel60 = new javax.swing.JLabel();
-        lecEmail3 = new javax.swing.JTextField();
-        jLabel61 = new javax.swing.JLabel();
-        lecUsername3 = new javax.swing.JTextField();
-        jLabel62 = new javax.swing.JLabel();
-        jLabel63 = new javax.swing.JLabel();
-        lecContact3 = new javax.swing.JTextField();
-        jLabel64 = new javax.swing.JLabel();
-        lecDesignation3 = new javax.swing.JComboBox<>();
-        lecRegister3 = new javax.swing.JButton();
-        backB4 = new javax.swing.JButton();
-        lecPassword3 = new javax.swing.JPasswordField();
+        pmAssign = new javax.swing.JButton();
+        backB6 = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        lecTable3 = new javax.swing.JTable();
+        pmRemove = new javax.swing.JButton();
         p1_addStd = new javax.swing.JPanel();
         header1 = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
@@ -210,18 +212,23 @@ public class admin extends javax.swing.JFrame {
         p1_manageStd = new javax.swing.JPanel();
         header6 = new javax.swing.JPanel();
         jLabel71 = new javax.swing.JLabel();
-        jLabel72 = new javax.swing.JLabel();
-        lecEmail5 = new javax.swing.JTextField();
-        jLabel73 = new javax.swing.JLabel();
-        lecUsername5 = new javax.swing.JTextField();
-        jLabel74 = new javax.swing.JLabel();
-        jLabel75 = new javax.swing.JLabel();
-        lecContact5 = new javax.swing.JTextField();
-        jLabel76 = new javax.swing.JLabel();
-        lecDesignation5 = new javax.swing.JComboBox<>();
-        lecRegister5 = new javax.swing.JButton();
-        backB6 = new javax.swing.JButton();
-        lecPassword5 = new javax.swing.JPasswordField();
+        stdContact2 = new javax.swing.JTextField();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        stdTable2 = new javax.swing.JTable();
+        stdSearch = new javax.swing.JButton();
+        jLabel69 = new javax.swing.JLabel();
+        stdCourse2 = new javax.swing.JComboBox<>();
+        stdEdit = new javax.swing.JButton();
+        backB9 = new javax.swing.JButton();
+        stdPassword2 = new javax.swing.JTextField();
+        tfStdSearch = new javax.swing.JTextField();
+        jLabel70 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        stdEmail2 = new javax.swing.JTextField();
+        jLabel78 = new javax.swing.JLabel();
+        stdUsername2 = new javax.swing.JTextField();
+        jLabel79 = new javax.swing.JLabel();
+        jLabel80 = new javax.swing.JLabel();
         p2 = new javax.swing.JPanel();
         header7 = new javax.swing.JPanel();
         jLabel66 = new javax.swing.JLabel();
@@ -234,7 +241,6 @@ public class admin extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         stdTable1 = new javax.swing.JTable();
         backB8 = new javax.swing.JButton();
-        p4 = new javax.swing.JPanel();
         p5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -263,19 +269,19 @@ public class admin extends javax.swing.JFrame {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-icon.png"))); // NOI18N
-        sidePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 67));
+        sidePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 80));
 
         adminUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         adminUsername.setForeground(new java.awt.Color(0, 204, 0));
         adminUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminUsername.setText("Username");
-        sidePanel.add(adminUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 130, 20));
+        sidePanel.add(adminUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 130, 20));
 
         adminDesignation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         adminDesignation.setForeground(new java.awt.Color(102, 204, 255));
         adminDesignation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminDesignation.setText("Online");
-        sidePanel.add(adminDesignation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 130, 15));
+        sidePanel.add(adminDesignation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 130, 15));
 
         dashboard.setBackground(new java.awt.Color(0, 0, 51));
         dashboard.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 204)));
@@ -797,13 +803,13 @@ public class admin extends javax.swing.JFrame {
 
         lecTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Email", "Password", "Username", "Contact No", "Designation"
+                "Email", "Password", "Username", "Contact No", "Designation", "Role"
             }
         ));
         jScrollPane1.setViewportView(lecTable);
@@ -846,7 +852,7 @@ public class admin extends javax.swing.JFrame {
 
         jLabel53.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel53.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel53.setText("Register Lecturer :");
+        jLabel53.setText("Manage Lecturer :");
         header3.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, -1, -1));
 
         jLabel54.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -880,6 +886,11 @@ public class admin extends javax.swing.JFrame {
         lecContact2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
         lecContact2.setForeground(new java.awt.Color(0, 0, 0));
         lecContact2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        lecContact2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lecContact2ActionPerformed(evt);
+            }
+        });
 
         jLabel58.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel58.setText("Designation :");
@@ -895,14 +906,14 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        lecRegister2.setBackground(new java.awt.Color(0, 0, 102));
-        lecRegister2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecRegister2.setForeground(new java.awt.Color(255, 255, 255));
-        lecRegister2.setText("Sign Up");
-        lecRegister2.setBorderPainted(false);
-        lecRegister2.addActionListener(new java.awt.event.ActionListener() {
+        lecEdit.setBackground(new java.awt.Color(0, 0, 102));
+        lecEdit.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        lecEdit.setForeground(new java.awt.Color(255, 255, 255));
+        lecEdit.setText("Edit");
+        lecEdit.setBorderPainted(false);
+        lecEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecRegister2ActionPerformed(evt);
+                lecEditActionPerformed(evt);
             }
         });
 
@@ -917,76 +928,146 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
+        lecTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Email", "Password", "Username", "Contact No", "Designation", "Role"
+            }
+        ));
+        jScrollPane5.setViewportView(lecTable2);
+
         lecPassword2.setBackground(new java.awt.Color(255, 255, 255));
+        lecPassword2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
         lecPassword2.setForeground(new java.awt.Color(0, 0, 0));
         lecPassword2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        lecPassword2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lecPassword2ActionPerformed(evt);
+            }
+        });
+
+        tfLecSearch.setBackground(new java.awt.Color(255, 255, 255));
+        tfLecSearch.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        tfLecSearch.setForeground(new java.awt.Color(0, 0, 0));
+        tfLecSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        tfLecSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfLecSearchActionPerformed(evt);
+            }
+        });
+
+        jLabel68.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel68.setText("Search :");
+
+        lecSearch.setBackground(new java.awt.Color(0, 0, 102));
+        lecSearch.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        lecSearch.setForeground(new java.awt.Color(255, 255, 255));
+        lecSearch.setText("Search");
+        lecSearch.setBorderPainted(false);
+        lecSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                lecSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout p1_manageLecLayout = new javax.swing.GroupLayout(p1_manageLec);
         p1_manageLec.setLayout(p1_manageLecLayout);
         p1_manageLecLayout.setHorizontalGroup(
             p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(header3, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
             .addGroup(p1_manageLecLayout.createSequentialGroup()
                 .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p1_manageLecLayout.createSequentialGroup()
-                        .addGap(291, 291, 291)
-                        .addComponent(lecRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(p1_manageLecLayout.createSequentialGroup()
-                        .addGap(329, 329, 329)
-                        .addComponent(backB3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(131, 131, 131)
+                        .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel68)
+                            .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel56)
+                                .addComponent(jLabel55)
+                                .addComponent(jLabel54)
+                                .addComponent(lecEmail2)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_manageLecLayout.createSequentialGroup()
+                                    .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel57)
+                                        .addComponent(lecContact2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(33, 33, 33)
+                                    .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(p1_manageLecLayout.createSequentialGroup()
+                                            .addComponent(jLabel58)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(lecDesignation2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(lecPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lecUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(p1_manageLecLayout.createSequentialGroup()
+                                .addComponent(tfLecSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lecSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(p1_manageLecLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel56)
-                            .addComponent(jLabel55)
-                            .addComponent(jLabel54)
-                            .addComponent(lecUsername2)
-                            .addComponent(lecEmail2)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_manageLecLayout.createSequentialGroup()
-                                .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel57)
-                                    .addComponent(lecContact2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(p1_manageLecLayout.createSequentialGroup()
-                                        .addComponent(jLabel58)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lecDesignation2, 0, 238, Short.MAX_VALUE)))
-                            .addComponent(lecPassword2))))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addGap(297, 297, 297)
+                        .addComponent(lecEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(p1_manageLecLayout.createSequentialGroup()
+                        .addGap(335, 335, 335)
+                        .addComponent(backB3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         p1_manageLecLayout.setVerticalGroup(
             p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p1_manageLecLayout.createSequentialGroup()
                 .addComponent(header3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel68)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfLecSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lecSearch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel54)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(lecEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel55)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lecPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel56)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(lecUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel57)
                     .addComponent(jLabel58))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(p1_manageLecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(p1_manageLecLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(lecContact2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_manageLecLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lecDesignation2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61)
-                .addComponent(lecRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(backB3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                    .addComponent(lecDesignation2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lecContact2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lecEdit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backB3)
+                .addGap(87, 87, 87))
         );
 
         centrePanel.add(p1_manageLec, "card7");
@@ -996,147 +1077,89 @@ public class admin extends javax.swing.JFrame {
 
         jLabel59.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel59.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel59.setText("Register Lecturer :");
+        jLabel59.setText("Allot & Remove PM Role :");
         header4.add(jLabel59, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, -1, -1));
 
-        jLabel60.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel60.setText("Email Address : ");
-
-        lecEmail3.setBackground(new java.awt.Color(255, 255, 255));
-        lecEmail3.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecEmail3.setForeground(new java.awt.Color(0, 0, 0));
-        lecEmail3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-        lecEmail3.addActionListener(new java.awt.event.ActionListener() {
+        pmAssign.setBackground(new java.awt.Color(51, 204, 0));
+        pmAssign.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        pmAssign.setForeground(new java.awt.Color(255, 255, 255));
+        pmAssign.setText("Assign");
+        pmAssign.setBorderPainted(false);
+        pmAssign.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecEmail3ActionPerformed(evt);
+                pmAssignActionPerformed(evt);
             }
         });
 
-        jLabel61.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel61.setText("Password :");
-
-        lecUsername3.setBackground(new java.awt.Color(255, 255, 255));
-        lecUsername3.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecUsername3.setForeground(new java.awt.Color(0, 0, 0));
-        lecUsername3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-
-        jLabel62.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel62.setText("Username : ");
-
-        jLabel63.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel63.setText("Contact No :");
-
-        lecContact3.setBackground(new java.awt.Color(255, 255, 255));
-        lecContact3.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecContact3.setForeground(new java.awt.Color(0, 0, 0));
-        lecContact3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-
-        jLabel64.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel64.setText("Designation :");
-
-        lecDesignation3.setBackground(new java.awt.Color(255, 255, 255));
-        lecDesignation3.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecDesignation3.setForeground(new java.awt.Color(0, 0, 0));
-        lecDesignation3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Designation", "Head of School", "Senior", "Junior", "Part Time" }));
-        lecDesignation3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
-        lecDesignation3.addActionListener(new java.awt.event.ActionListener() {
+        backB6.setBackground(new java.awt.Color(0, 0, 104));
+        backB6.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        backB6.setForeground(new java.awt.Color(255, 255, 255));
+        backB6.setText("Back");
+        backB6.setBorderPainted(false);
+        backB6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecDesignation3ActionPerformed(evt);
+                backB6ActionPerformed(evt);
             }
         });
 
-        lecRegister3.setBackground(new java.awt.Color(0, 0, 102));
-        lecRegister3.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecRegister3.setForeground(new java.awt.Color(255, 255, 255));
-        lecRegister3.setText("Sign Up");
-        lecRegister3.setBorderPainted(false);
-        lecRegister3.addActionListener(new java.awt.event.ActionListener() {
+        lecTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Email", "Password", "Username", "Contact No", "Designation", "Role"
+            }
+        ));
+        jScrollPane7.setViewportView(lecTable3);
+
+        pmRemove.setBackground(new java.awt.Color(255, 0, 51));
+        pmRemove.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        pmRemove.setForeground(new java.awt.Color(255, 255, 255));
+        pmRemove.setText("Remove");
+        pmRemove.setBorderPainted(false);
+        pmRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecRegister3ActionPerformed(evt);
+                pmRemoveActionPerformed(evt);
             }
         });
-
-        backB4.setBackground(new java.awt.Color(255, 0, 51));
-        backB4.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        backB4.setForeground(new java.awt.Color(255, 255, 255));
-        backB4.setText("Back");
-        backB4.setBorderPainted(false);
-        backB4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backB4ActionPerformed(evt);
-            }
-        });
-
-        lecPassword3.setBackground(new java.awt.Color(255, 255, 255));
-        lecPassword3.setForeground(new java.awt.Color(0, 0, 0));
-        lecPassword3.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         javax.swing.GroupLayout p1_allotPMLayout = new javax.swing.GroupLayout(p1_allotPM);
         p1_allotPM.setLayout(p1_allotPMLayout);
         p1_allotPMLayout.setHorizontalGroup(
             p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(header4, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
             .addGroup(p1_allotPMLayout.createSequentialGroup()
                 .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p1_allotPMLayout.createSequentialGroup()
-                        .addGap(291, 291, 291)
-                        .addComponent(lecRegister3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
+                        .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(p1_allotPMLayout.createSequentialGroup()
+                                .addGap(150, 150, 150)
+                                .addComponent(pmAssign, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(pmRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(p1_allotPMLayout.createSequentialGroup()
-                        .addGap(329, 329, 329)
-                        .addComponent(backB4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_allotPMLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel62)
-                            .addComponent(jLabel61)
-                            .addComponent(jLabel60)
-                            .addComponent(lecUsername3)
-                            .addComponent(lecEmail3)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_allotPMLayout.createSequentialGroup()
-                                .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel63)
-                                    .addComponent(lecContact3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(p1_allotPMLayout.createSequentialGroup()
-                                        .addComponent(jLabel64)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lecDesignation3, 0, 238, Short.MAX_VALUE)))
-                            .addComponent(lecPassword3))))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addGap(335, 335, 335)
+                        .addComponent(backB6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         p1_allotPMLayout.setVerticalGroup(
             p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p1_allotPMLayout.createSequentialGroup()
                 .addComponent(header4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(jLabel60)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecEmail3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel61)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecPassword3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel62)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecUsername3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel63)
-                    .addComponent(jLabel64))
-                .addGroup(p1_allotPMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(p1_allotPMLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(lecContact3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_allotPMLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lecDesignation3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61)
-                .addComponent(lecRegister3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pmAssign, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pmRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(backB4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addComponent(backB6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         centrePanel.add(p1_allotPM, "card7");
@@ -1373,147 +1396,222 @@ public class admin extends javax.swing.JFrame {
 
         jLabel71.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel71.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel71.setText("Register Lecturer :");
+        jLabel71.setText("Manage Student :");
         header6.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, -1, -1));
 
-        jLabel72.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel72.setText("Email Address : ");
-
-        lecEmail5.setBackground(new java.awt.Color(255, 255, 255));
-        lecEmail5.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecEmail5.setForeground(new java.awt.Color(0, 0, 0));
-        lecEmail5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-        lecEmail5.addActionListener(new java.awt.event.ActionListener() {
+        stdContact2.setBackground(new java.awt.Color(255, 255, 255));
+        stdContact2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        stdContact2.setForeground(new java.awt.Color(0, 0, 0));
+        stdContact2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        stdContact2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecEmail5ActionPerformed(evt);
+                stdContact2ActionPerformed(evt);
             }
         });
 
-        jLabel73.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel73.setText("Password :");
+        stdTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Email", "Password", "Username", "Contact No", "Course"
+            }
+        ));
+        jScrollPane6.setViewportView(stdTable2);
 
-        lecUsername5.setBackground(new java.awt.Color(255, 255, 255));
-        lecUsername5.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecUsername5.setForeground(new java.awt.Color(0, 0, 0));
-        lecUsername5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-
-        jLabel74.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel74.setText("Username : ");
-
-        jLabel75.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel75.setText("Contact No :");
-
-        lecContact5.setBackground(new java.awt.Color(255, 255, 255));
-        lecContact5.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecContact5.setForeground(new java.awt.Color(0, 0, 0));
-        lecContact5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-
-        jLabel76.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel76.setText("Designation :");
-
-        lecDesignation5.setBackground(new java.awt.Color(255, 255, 255));
-        lecDesignation5.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecDesignation5.setForeground(new java.awt.Color(0, 0, 0));
-        lecDesignation5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Designation", "Head of School", "Senior", "Junior", "Part Time" }));
-        lecDesignation5.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
-        lecDesignation5.addActionListener(new java.awt.event.ActionListener() {
+        stdSearch.setBackground(new java.awt.Color(0, 0, 102));
+        stdSearch.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        stdSearch.setForeground(new java.awt.Color(255, 255, 255));
+        stdSearch.setText("Search");
+        stdSearch.setBorderPainted(false);
+        stdSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecDesignation5ActionPerformed(evt);
+                stdSearchActionPerformed(evt);
             }
         });
 
-        lecRegister5.setBackground(new java.awt.Color(0, 0, 102));
-        lecRegister5.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecRegister5.setForeground(new java.awt.Color(255, 255, 255));
-        lecRegister5.setText("Sign Up");
-        lecRegister5.setBorderPainted(false);
-        lecRegister5.addActionListener(new java.awt.event.ActionListener() {
+        jLabel69.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel69.setText("Course :");
+
+        stdCourse2.setBackground(new java.awt.Color(255, 255, 255));
+        stdCourse2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        stdCourse2.setForeground(new java.awt.Color(0, 0, 0));
+        stdCourse2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Course", "Software Engineering", "Data Analysis", "Multimedia", "Aritificial Inteligence", "Fintech" }));
+        stdCourse2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
+        stdCourse2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lecRegister5ActionPerformed(evt);
+                stdCourse2ActionPerformed(evt);
             }
         });
 
-        backB6.setBackground(new java.awt.Color(255, 0, 51));
-        backB6.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        backB6.setForeground(new java.awt.Color(255, 255, 255));
-        backB6.setText("Back");
-        backB6.setBorderPainted(false);
-        backB6.addActionListener(new java.awt.event.ActionListener() {
+        stdEdit.setBackground(new java.awt.Color(0, 0, 102));
+        stdEdit.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        stdEdit.setForeground(new java.awt.Color(255, 255, 255));
+        stdEdit.setText("Edit");
+        stdEdit.setBorderPainted(false);
+        stdEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backB6ActionPerformed(evt);
+                stdEditActionPerformed(evt);
             }
         });
 
-        lecPassword5.setBackground(new java.awt.Color(255, 255, 255));
-        lecPassword5.setForeground(new java.awt.Color(0, 0, 0));
-        lecPassword5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        backB9.setBackground(new java.awt.Color(255, 0, 51));
+        backB9.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        backB9.setForeground(new java.awt.Color(255, 255, 255));
+        backB9.setText("Back");
+        backB9.setBorderPainted(false);
+        backB9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backB9ActionPerformed(evt);
+            }
+        });
+
+        stdPassword2.setBackground(new java.awt.Color(255, 255, 255));
+        stdPassword2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        stdPassword2.setForeground(new java.awt.Color(0, 0, 0));
+        stdPassword2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        stdPassword2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stdPassword2ActionPerformed(evt);
+            }
+        });
+
+        tfStdSearch.setBackground(new java.awt.Color(255, 255, 255));
+        tfStdSearch.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        tfStdSearch.setForeground(new java.awt.Color(0, 0, 0));
+        tfStdSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        tfStdSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfStdSearchActionPerformed(evt);
+            }
+        });
+
+        jLabel70.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel70.setText("Email Address : ");
+
+        jLabel77.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel77.setText("Search :");
+
+        stdEmail2.setBackground(new java.awt.Color(255, 255, 255));
+        stdEmail2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        stdEmail2.setForeground(new java.awt.Color(0, 0, 0));
+        stdEmail2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+        stdEmail2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stdEmail2ActionPerformed(evt);
+            }
+        });
+
+        jLabel78.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel78.setText("Password :");
+
+        stdUsername2.setBackground(new java.awt.Color(255, 255, 255));
+        stdUsername2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        stdUsername2.setForeground(new java.awt.Color(0, 0, 0));
+        stdUsername2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
+
+        jLabel79.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel79.setText("Username : ");
+
+        jLabel80.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel80.setText("Contact No :");
 
         javax.swing.GroupLayout p1_manageStdLayout = new javax.swing.GroupLayout(p1_manageStd);
         p1_manageStd.setLayout(p1_manageStdLayout);
         p1_manageStdLayout.setHorizontalGroup(
             p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(header6, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
             .addGroup(p1_manageStdLayout.createSequentialGroup()
                 .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(291, 291, 291)
-                        .addComponent(lecRegister5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(329, 329, 329)
-                        .addComponent(backB6, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel74)
-                            .addComponent(jLabel73)
-                            .addComponent(jLabel72)
-                            .addComponent(lecUsername5)
-                            .addComponent(lecEmail5)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_manageStdLayout.createSequentialGroup()
-                                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel75)
-                                    .addComponent(lecContact5, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(p1_manageStdLayout.createSequentialGroup()
-                                        .addComponent(jLabel76)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lecDesignation5, 0, 238, Short.MAX_VALUE)))
-                            .addComponent(lecPassword5))))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addGap(131, 131, 131)
+                        .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel77)
+                            .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel79)
+                                .addComponent(jLabel78)
+                                .addComponent(jLabel70)
+                                .addComponent(stdEmail2)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_manageStdLayout.createSequentialGroup()
+                                    .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel80)
+                                        .addComponent(stdContact2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(33, 33, 33)
+                                    .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(p1_manageStdLayout.createSequentialGroup()
+                                            .addComponent(jLabel69)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(stdCourse2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(stdPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(stdUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(p1_manageStdLayout.createSequentialGroup()
+                                .addComponent(tfStdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(stdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(p1_manageStdLayout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(stdEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(p1_manageStdLayout.createSequentialGroup()
+                                .addGap(204, 204, 204)
+                                .addComponent(backB9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         p1_manageStdLayout.setVerticalGroup(
             p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(p1_manageStdLayout.createSequentialGroup()
                 .addComponent(header6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70)
-                .addComponent(jLabel72)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecEmail5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel73)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecPassword5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel74)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lecUsername5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel75)
-                    .addComponent(jLabel76))
-                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(lecContact5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lecDesignation5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61)
-                .addComponent(lecRegister5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfStdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stdSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(backB6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addComponent(jLabel70)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel78)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel79)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel80)
+                    .addComponent(jLabel69))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(stdCourse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stdContact2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdEdit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(backB9)
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         centrePanel.add(p1_manageStd, "card7");
@@ -1528,13 +1626,13 @@ public class admin extends javax.swing.JFrame {
 
         lecTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Email", "Password", "Username", "Contact No", "Designation"
+                "Email", "Password", "Username", "Contact No", "Designation", "Role"
             }
         ));
         jScrollPane3.setViewportView(lecTable1);
@@ -1639,19 +1737,6 @@ public class admin extends javax.swing.JFrame {
         );
 
         centrePanel.add(p3, "card4");
-
-        javax.swing.GroupLayout p4Layout = new javax.swing.GroupLayout(p4);
-        p4.setLayout(p4Layout);
-        p4Layout.setHorizontalGroup(
-            p4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 769, Short.MAX_VALUE)
-        );
-        p4Layout.setVerticalGroup(
-            p4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
-        );
-
-        centrePanel.add(p4, "card5");
 
         p5.setBackground(new java.awt.Color(218, 228, 230));
 
@@ -1836,7 +1921,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         p1_addLec.setVisible(false);
         p1_removeLec.setVisible(false);
@@ -1860,7 +1944,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(true);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         p1_addLec.setVisible(false);
         p1_removeLec.setVisible(false);
@@ -1884,7 +1967,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(true);
-        p4.setVisible(false);
         p5.setVisible(false);
         p1_addLec.setVisible(false);
         p1_removeLec.setVisible(false);
@@ -1914,7 +1996,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(true);
         p1_addLec.setVisible(false);
         p1_removeLec.setVisible(false);
@@ -1994,8 +2075,8 @@ public class admin extends javax.swing.JFrame {
                 bufferedWriter.write(lecpassword + ",");
                 bufferedWriter.write(lecusername + ",");
                 bufferedWriter.write(leccontact + ",");
-                bufferedWriter.write(lecpassword + ",");
                 bufferedWriter.write(lecdesignation + ",");
+                bufferedWriter.write( "none,");
                 bufferedWriter.newLine();
 
                 // Close the BufferedWriter
@@ -2024,7 +2105,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2036,7 +2116,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(true);
@@ -2148,7 +2227,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addStd.setVisible(false);
@@ -2175,7 +2253,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_removeLec.setVisible(false);
@@ -2189,29 +2266,48 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_lecDesignation2ActionPerformed
 
-    private void lecRegister2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecRegister2ActionPerformed
+    private void lecEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_lecRegister2ActionPerformed
+        DefaultTableModel tblModel = (DefaultTableModel) lecTable2.getModel();
+        int selectedRow = lecTable2.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to modify.");
+            return;
+        }
+
+        if (lecEmail2.getText().equals("") || lecPassword2.getText().equals("") || lecUsername2.getText().equals("") || lecContact2.getText().equals("") || lecDesignation2.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please Enter All Data!");
+            return;
+        }
+
+        String lecRole = tblModel.getValueAt(selectedRow, 5).toString(); // assuming lecRole2 is at index 5 in the table model
+        String newData[] = { lecEmail2.getText(), lecPassword2.getText(), lecUsername2.getText(), lecContact2.getText(), lecDesignation2.getSelectedItem().toString(), lecRole };
+
+        for (int i = 0; i < tblModel.getColumnCount(); i++) {
+            tblModel.setValueAt(newData[i], selectedRow, i);
+        }
+
+        JOptionPane.showMessageDialog(this, "Data Modified Successfully!");
+        saveDataToFile(lecTable2, "lecturer.txt");
+        // Clear all text field
+        lecEmail2.setText("");
+        lecPassword2.setText("");
+        lecUsername2.setText("");
+        lecContact2.setText("");
+        lecDesignation2.setSelectedIndex(-1);
+    }//GEN-LAST:event_lecEditActionPerformed
 
     private void backB3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backB3ActionPerformed
         // TODO add your handling code here:
+        //Switching panels on click
+        p1.setVisible(true);
+        p2.setVisible(false);
+        p3.setVisible(false);
+        p5.setVisible(false);
+        
+        p1_manageLec.setVisible(false);
     }//GEN-LAST:event_backB3ActionPerformed
-
-    private void lecEmail3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecEmail3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecEmail3ActionPerformed
-
-    private void lecDesignation3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecDesignation3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecDesignation3ActionPerformed
-
-    private void lecRegister3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecRegister3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecRegister3ActionPerformed
-
-    private void backB4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backB4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_backB4ActionPerformed
 
     private void stdRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdRemoveActionPerformed
         // TODO add your handling code here:
@@ -2234,27 +2330,10 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_removeStd.setVisible(false);
     }//GEN-LAST:event_backB5ActionPerformed
-
-    private void lecEmail5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecEmail5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecEmail5ActionPerformed
-
-    private void lecDesignation5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecDesignation5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecDesignation5ActionPerformed
-
-    private void lecRegister5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecRegister5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lecRegister5ActionPerformed
-
-    private void backB6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backB6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_backB6ActionPerformed
 
     private void removeLecturerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeLecturerMouseClicked
         // TODO add your handling code here:
@@ -2263,7 +2342,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2277,11 +2355,11 @@ public class admin extends javax.swing.JFrame {
 
     private void manageLecturerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageLecturerMouseClicked
         // TODO add your handling code here:
+        loadDataFromFile("lecturer.txt", lecTable2);
         //Switching panels on click
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2295,11 +2373,11 @@ public class admin extends javax.swing.JFrame {
 
     private void addPMMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addPMMouseClicked
         // TODO add your handling code here:
+        loadDataFromFile("lecturer.txt", lecTable3);
         //Switching panels on click
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2317,7 +2395,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2336,7 +2413,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2350,11 +2426,11 @@ public class admin extends javax.swing.JFrame {
 
     private void manageStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageStudentMouseClicked
         // TODO add your handling code here:
+        loadDataFromFile("student.txt", stdTable2);
         //Switching panels on click
         p1.setVisible(false);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
         
         p1_addLec.setVisible(false);
@@ -2372,7 +2448,6 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
 
     }//GEN-LAST:event_backB7ActionPerformed
@@ -2383,9 +2458,245 @@ public class admin extends javax.swing.JFrame {
         p1.setVisible(true);
         p2.setVisible(false);
         p3.setVisible(false);
-        p4.setVisible(false);
         p5.setVisible(false);
     }//GEN-LAST:event_backB8ActionPerformed
+
+    private void lecPassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecPassword2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lecPassword2ActionPerformed
+
+    private void tfLecSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfLecSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfLecSearchActionPerformed
+
+    private void lecSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecSearchActionPerformed
+        // TODO add your handling code here:
+        // Get the username to search for
+        String searchEmail = tfLecSearch.getText();
+
+        // Check if the search field is empty
+        if (searchEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an email to search.");
+            return;
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) lecTable2.getModel();
+        boolean found = false;
+
+        // Iterate through the rows of the table to find the matching username
+        for (int i = 0; i < tblModel.getRowCount(); i++) {
+            String username = tblModel.getValueAt(i, 0).toString(); // Assuming username is in the first column
+
+            if (username.equals(searchEmail)) {
+                // If the email is found, populate the text fields with user information
+                lecEmail2.setText(tblModel.getValueAt(i, 0).toString()); 
+                lecPassword2.setText(tblModel.getValueAt(i, 1).toString()); 
+                lecUsername2.setText(tblModel.getValueAt(i, 2).toString()); 
+                lecContact2.setText(tblModel.getValueAt(i, 3).toString());  
+                lecDesignation2.setSelectedIndex(-1);
+
+                found = true;
+                break;
+            }
+        }
+        // If email is not found, display a message
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Email not found.");
+        }
+    }//GEN-LAST:event_lecSearchActionPerformed
+
+    private void lecContact2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecContact2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lecContact2ActionPerformed
+
+    private void stdContact2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdContact2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stdContact2ActionPerformed
+
+    private void stdSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdSearchActionPerformed
+        // TODO add your handling code here:
+        // Get the username to search for
+        String searchEmail = tfStdSearch.getText();
+
+        // Check if the search field is empty
+        if (searchEmail.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an email to search.");
+            return;
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) stdTable2.getModel();
+        boolean found = false;
+
+        // Iterate through the rows of the table to find the matching username
+        for (int i = 0; i < tblModel.getRowCount(); i++) {
+            String email = tblModel.getValueAt(i, 0).toString(); // Assuming username is in the first column
+
+            if (email.equals(searchEmail)) {
+                // If the email is found, populate the text fields with user information
+                stdEmail2.setText(tblModel.getValueAt(i, 0).toString()); 
+                stdPassword2.setText(tblModel.getValueAt(i, 1).toString()); 
+                stdUsername2.setText(tblModel.getValueAt(i, 2).toString()); 
+                stdContact2.setText(tblModel.getValueAt(i, 3).toString());  
+                stdCourse2.setSelectedIndex(-1);
+
+                found = true;
+                break;
+            }
+        }
+        // If email is not found, display a message
+        if (!found) {
+            JOptionPane.showMessageDialog(this, "Email not found.");
+        }
+    }//GEN-LAST:event_stdSearchActionPerformed
+
+    private void stdCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdCourse2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stdCourse2ActionPerformed
+
+    private void stdEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdEditActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel tblModel = (DefaultTableModel) stdTable2.getModel();
+        int selectedRow = stdTable2.getSelectedRow();
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to modify.");
+            return;
+        }
+
+        if (stdEmail2.getText().equals("") || stdPassword2.getText().equals("") || stdUsername2.getText().equals("") || stdContact2.getText().equals("") || stdCourse2.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please Enter All Data!");
+            return;
+        }
+
+        String newData[] = { stdEmail2.getText(), stdPassword2.getText(), stdUsername2.getText(), stdContact2.getText(), stdCourse2.getSelectedItem().toString() };
+
+        for (int i = 0; i < tblModel.getColumnCount(); i++) {
+            tblModel.setValueAt(newData[i], selectedRow, i);
+        }
+
+        JOptionPane.showMessageDialog(this, "Data Modified Successfully!");
+        saveDataToFile(stdTable2, "student.txt");
+        //Clear all text field
+        stdEmail2.setText("");
+        stdPassword2.setText("");
+        stdUsername2.setText("");
+        stdContact2.setText("");
+        stdCourse2.setSelectedIndex(-1);
+    }//GEN-LAST:event_stdEditActionPerformed
+
+    private void backB9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backB9ActionPerformed
+        // TODO add your handling code here:
+        //Switching panels on click
+        p1.setVisible(true);
+        p2.setVisible(false);
+        p3.setVisible(false);
+        p5.setVisible(false);
+        
+        p1_manageStd.setVisible(false);
+    }//GEN-LAST:event_backB9ActionPerformed
+
+    private void stdPassword2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdPassword2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stdPassword2ActionPerformed
+
+    private void tfStdSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStdSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfStdSearchActionPerformed
+
+    private void stdEmail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdEmail2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stdEmail2ActionPerformed
+
+    private void pmAssignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmAssignActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = lecTable3.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a lecturer to assign PM role.");
+            return;
+        }
+
+        String lecturerEmail = lecTable3.getValueAt(selectedRow, 0).toString();
+        Path filePath = Paths.get("lecturer.txt");
+
+        try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+            StringBuilder fileContent = new StringBuilder();
+            String line;
+            boolean found = false;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 1 && parts[0].equals(lecturerEmail)) {
+                    parts[5] = "Project Manager,"; // Replace value at index 5 with "Project Manager"
+                    line = String.join(",", parts);
+                    found = true;
+                }
+                fileContent.append(line).append(System.lineSeparator());
+            }
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Lecturer not found in the file.");
+                return;
+            }
+            try (BufferedWriter bw = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+                bw.write(fileContent.toString());
+                JOptionPane.showMessageDialog(this, "PM role assigned to the lecturer successfully.");
+                saveDataToFile(lecTable3, "lecturer.txt");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error writing to lecturer.txt file: " + e.getMessage());
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading from lecturer.txt file: " + e.getMessage());
+        }
+    }//GEN-LAST:event_pmAssignActionPerformed
+
+    private void backB6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backB6ActionPerformed
+        // TODO add your handling code here:
+        //Switching panels on click
+        p1.setVisible(true);
+        p2.setVisible(false);
+        p3.setVisible(false);
+        p5.setVisible(false);
+        
+        p1_allotPM.setVisible(false);
+    }//GEN-LAST:event_backB6ActionPerformed
+
+    private void pmRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pmRemoveActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = lecTable3.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a lecturer to remove PM role.");
+            return;
+        }
+
+        String lecturerEmail = lecTable3.getValueAt(selectedRow, 0).toString();
+        Path filePath = Paths.get("lecturer.txt");
+
+        try (BufferedReader br = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+            StringBuilder fileContent = new StringBuilder();
+            String line;
+            boolean found = false;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 1 && parts[0].equals(lecturerEmail)) {
+                    parts[5] = "none,"; // Replace value at index 5 with "-"
+                    line = String.join(",", parts);
+                    found = true;
+                }
+                fileContent.append(line).append(System.lineSeparator());
+            }
+            if (!found) {
+                JOptionPane.showMessageDialog(this, "Lecturer not found in the file.");
+                return;
+            }
+            try (BufferedWriter bw = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
+                bw.write(fileContent.toString());
+                JOptionPane.showMessageDialog(this, "PM role removed to the lecturer successfully.");
+                saveDataToFile(lecTable3, "lecturer.txt");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error writing to lecturer.txt file: " + e.getMessage());
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading from lecturer.txt file: " + e.getMessage());
+        }
+    }//GEN-LAST:event_pmRemoveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2432,11 +2743,11 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JButton backB1;
     private javax.swing.JButton backB2;
     private javax.swing.JButton backB3;
-    private javax.swing.JButton backB4;
     private javax.swing.JButton backB5;
     private javax.swing.JButton backB6;
     private javax.swing.JButton backB7;
     private javax.swing.JButton backB8;
+    private javax.swing.JButton backB9;
     private javax.swing.JPanel centrePanel;
     private javax.swing.JPanel dashboard;
     private javax.swing.JLabel email;
@@ -2500,22 +2811,19 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel60;
-    private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel62;
-    private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
+    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
-    private javax.swing.JLabel jLabel72;
-    private javax.swing.JLabel jLabel73;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
-    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
@@ -2525,34 +2833,28 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField lecContact;
     private javax.swing.JTextField lecContact2;
-    private javax.swing.JTextField lecContact3;
-    private javax.swing.JTextField lecContact5;
     private javax.swing.JComboBox<String> lecDesignation;
     private javax.swing.JComboBox<String> lecDesignation2;
-    private javax.swing.JComboBox<String> lecDesignation3;
-    private javax.swing.JComboBox<String> lecDesignation5;
+    private javax.swing.JButton lecEdit;
     private javax.swing.JTextField lecEmail;
     private javax.swing.JTextField lecEmail2;
-    private javax.swing.JTextField lecEmail3;
-    private javax.swing.JTextField lecEmail5;
     private javax.swing.JPasswordField lecPassword;
-    private javax.swing.JPasswordField lecPassword2;
-    private javax.swing.JPasswordField lecPassword3;
-    private javax.swing.JPasswordField lecPassword5;
+    private javax.swing.JTextField lecPassword2;
     private javax.swing.JButton lecRegister;
-    private javax.swing.JButton lecRegister2;
-    private javax.swing.JButton lecRegister3;
-    private javax.swing.JButton lecRegister5;
     private javax.swing.JButton lecRemove;
+    private javax.swing.JButton lecSearch;
     private javax.swing.JTable lecTable;
     private javax.swing.JTable lecTable1;
+    private javax.swing.JTable lecTable2;
+    private javax.swing.JTable lecTable3;
     private javax.swing.JTextField lecUsername;
     private javax.swing.JTextField lecUsername2;
-    private javax.swing.JTextField lecUsername3;
-    private javax.swing.JTextField lecUsername5;
     private javax.swing.JPanel lecturer;
     private javax.swing.JPanel logoutB;
     private javax.swing.JPanel mainPanel;
@@ -2568,22 +2870,33 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel p1_removeStd;
     private javax.swing.JPanel p2;
     private javax.swing.JPanel p3;
-    private javax.swing.JPanel p4;
     private javax.swing.JPanel p5;
     private javax.swing.JLabel phone;
+    private javax.swing.JButton pmAssign;
+    private javax.swing.JButton pmRemove;
     private javax.swing.JPanel removeLecturer;
     private javax.swing.JPanel removeStudent;
     private javax.swing.JPanel sidePanel;
     private javax.swing.JTextField stdContact;
+    private javax.swing.JTextField stdContact2;
     private javax.swing.JComboBox<String> stdCourse;
+    private javax.swing.JComboBox<String> stdCourse2;
+    private javax.swing.JButton stdEdit;
     private javax.swing.JTextField stdEmail;
+    private javax.swing.JTextField stdEmail2;
     private javax.swing.JPasswordField stdPassword;
+    private javax.swing.JTextField stdPassword2;
     private javax.swing.JButton stdRegister;
     private javax.swing.JButton stdRemove;
+    private javax.swing.JButton stdSearch;
     private javax.swing.JTable stdTable;
     private javax.swing.JTable stdTable1;
+    private javax.swing.JTable stdTable2;
     private javax.swing.JTextField stdUsername;
+    private javax.swing.JTextField stdUsername2;
     private javax.swing.JPanel student;
+    private javax.swing.JTextField tfLecSearch;
+    private javax.swing.JTextField tfStdSearch;
     private javax.swing.JLabel username;
     private javax.swing.JPanel viewProfile;
     // End of variables declaration//GEN-END:variables
