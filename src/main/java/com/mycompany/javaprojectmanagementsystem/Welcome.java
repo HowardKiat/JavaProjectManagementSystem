@@ -10,12 +10,12 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class welcomeMessage extends javax.swing.JFrame {
+public class Welcome extends javax.swing.JFrame {
 
     /**
      * Creates new form welcome
      */
-    public welcomeMessage() {
+    public Welcome() {
         initComponents();
     }
 
@@ -57,7 +57,7 @@ public class welcomeMessage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new welcomeMessage().setVisible(true);
+                new Welcome().setVisible(true);
             }
         });
     }
