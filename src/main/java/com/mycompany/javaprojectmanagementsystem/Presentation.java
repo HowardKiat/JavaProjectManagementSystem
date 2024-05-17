@@ -11,38 +11,41 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.FileReader;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author User
  */
 public class Presentation {
-    private final String studentID;
+    public final String studentID;
     private final String name;
+    private final String email;
     private final String intake;
-    private final String course;
     private final String topic; 
-    private final Date appointmentDate; 
+    private final Date date; 
     private final String startTime; 
     private final String endTime; 
     private final String reason; 
-    private final String supervisorName; 
-    private final String status;   
+    private final String supervisor; 
+    private final String status;    
     
-//    (from private to protected)
-    public Presentation(String studentID, String name, String intake, String course,
-                        String topic, Date appointmentDate, String startTime, String endTime,
-                        String reason, String supervisorName, String status) {
+
+    public Presentation(String studentID, String name, String email, String intake,
+                        String topic, Date date, String startTime, String endTime,
+                        String reason, String supervisor, String status) {
         this.studentID = studentID;
         this.name = name;
+        this.email = email;
         this.intake = intake;
-        this.course = course;
         this.topic = topic;
-        this.appointmentDate = appointmentDate;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.reason = reason;
-        this.supervisorName = supervisorName;
+        this.supervisor = supervisor;
         this.status = status;
     }
     
@@ -55,20 +58,20 @@ public class Presentation {
         return name;
     }
     
-    public String getIntake() {
-        return intake;
+    public String getEmail() {
+        return email;
     }
     
-    public String getCourse() {
-        return course;
+    public String getIntake() {
+        return intake;
     }
     
     public String getTopic() {
         return topic;
     }
     
-    public Date getAppointmentDate() {
-        return appointmentDate;
+    public Date getDate() {
+        return date;
     }
     
     public String getStartTime() {
@@ -83,8 +86,8 @@ public class Presentation {
         return reason;
     }
     
-    public String getSupervisorName() {
-        return supervisorName;
+    public String getSupervisor() {
+        return supervisor;
     }
     
     public String getStatus() {
@@ -93,48 +96,42 @@ public class Presentation {
     
     @Override
     public String toString() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         return "Presentation{" +
                 "studentID='" + studentID + '\'' +
                 ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", intake='" + intake + '\'' +
-                ", course='" + course + '\'' +
                 ", topic='" + topic + '\'' +
-                ", appointmentDate=" + appointmentDate +
+                ", date=" + df.format(date) +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", reason='" + reason + '\'' +
-                ", supervisorName='" + supervisorName + '\'' +
+                ", supervisor='" + supervisor + '\'' +
                 ", status='" + status + '\'' +
                 '}';
     }
     
     public static ArrayList<Presentation> readFromFile(String filePath) {
-        //use presentaation_request text file later on
         ArrayList<Presentation> presentations = new ArrayList<>();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                Presentation presentation = createPresentationFromData(data);
-                presentations.add(presentation);
+                Date date = dateFormatter.parse(data[5]); // Parse the date using the correct format
+                presentations.add(new Presentation(data[0], data[1], data[2], data[3], data[4], date, data[6], data[7], data[8], data[9], data[10]));
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return presentations;
     }
-    private static Presentation createPresentationFromData(String[] data) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date appointmentDate = dateFormat.parse(data[5]); // Assuming date format is yyyy-MM-dd
-        return new Presentation(data[0], data[1], data[2], data[3], data[4], appointmentDate,
-                data[6], data[7], data[8], data[9], data[10]);
-    }
-    
+  
     public static void main(String[] args) {
         String filePath = "presentation_request.txt"; 
         ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
 
-        // Now you can work with the presentations obtained from the file
         for (Presentation presentation : presentations) {
             System.out.println(presentation);
         }

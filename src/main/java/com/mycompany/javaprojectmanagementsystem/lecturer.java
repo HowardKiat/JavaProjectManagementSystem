@@ -5,6 +5,7 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import java.util.*;
+import lecturer.PresentationManager;
 
 
 //class Supervisee {
@@ -217,6 +218,8 @@ public class lecturer extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
+        new PresentationManager().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jLabel6MouseClicked
 
     /**

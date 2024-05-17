@@ -7,6 +7,7 @@ package student;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 //import com.mycompany.javaprojectmanagementsystem;
 
@@ -30,6 +31,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
     
     
     public presentationRequest(String name, String id, String intake, String email, String topic, String startTime, String endTime, String supervisee, String status, String reason, LocalDateTime presentationDate) {
+        super();
         this.name = name;
         this.id = id;
         this.intake = intake;
@@ -45,7 +47,8 @@ public class presentationRequestPage extends javax.swing.JFrame {
     
     @Override
     public String toString() {
-        return  id + "," + name + "," + email + "," + intake + "," + topic + "," + presentationDate + "," + startTime + "," + endTime + "," + reason + "," + supervisee + "," + status;
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return  id + "," + name + "," + email + "," + intake + "," + topic + "," + dtf.format(presentationDate) + "," + startTime + "," + endTime + "," + reason + "," + supervisee + "," + status;
     }
 }
     /**
@@ -111,6 +114,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
         String file = "presentation_request.txt";
 
         try (FileWriter writer = new FileWriter(file, true)) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             writer.write(pr.toString() + "\n");
             System.out.println("Presentation request saved to " + file);
             return true;
