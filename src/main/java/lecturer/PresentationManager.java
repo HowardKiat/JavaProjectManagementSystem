@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @author User
  */
 public class PresentationManager extends javax.swing.JFrame {
-    String filePath = "dummyReqP.txt";
+    String filePath = "presentation_request.txt";
     /**
      * Creates new form managePresentation
      */
@@ -35,7 +35,7 @@ public class PresentationManager extends javax.swing.JFrame {
 
         // Set column names
         model.setColumnIdentifiers(new String[]{
-                "Student ID", "Name", "Intake", "Course", "Topic", "Appointment Date", "Start Time",
+                "Student ID", "Name", "Intake", "Topic", "Date", "Start Time",
                 "End Time", "Reason", "Supervisor Name", "Status"
         });  
         
@@ -43,7 +43,7 @@ public class PresentationManager extends javax.swing.JFrame {
         for (Presentation presentation : presentations) {
             model.addRow(new Object[]{
                     presentation.getStudentID(), presentation.getName(), presentation.getIntake(),
-                    presentation.getCourse(), presentation.getTopic(), presentation.getAppointmentDate(),
+                    presentation.getTopic(), presentation.getAppointmentDate(),
                     presentation.getStartTime(), presentation.getEndTime(), presentation.getReason(),
                     presentation.getSupervisorName(), presentation.getStatus()
             });
@@ -108,17 +108,18 @@ public class PresentationManager extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "StudentID", "Name", "Intake", "Course", "Topic", "AppointmentDate", "StartTime", "EndTime", "Reason", "SupervisorName", "Status"
+                "StudentID", "Name", "Email", "Intake", "Topic", "Date", "StartTime", "EndTime", "Reason", "SupervisorName", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
+        jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

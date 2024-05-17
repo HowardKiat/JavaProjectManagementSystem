@@ -4,7 +4,6 @@
  */
 package com.mycompany.javaprojectmanagementsystem;
 
-import java.awt.List;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,6 +29,7 @@ public class Presentation {
     private final String supervisorName; 
     private final String status;   
     
+//    (from private to protected)
     public Presentation(String studentID, String name, String intake, String course,
                         String topic, Date appointmentDate, String startTime, String endTime,
                         String reason, String supervisorName, String status) {
@@ -131,7 +131,7 @@ public class Presentation {
     }
     
     public static void main(String[] args) {
-        String filePath = "dummyReqP.txt"; 
+        String filePath = "presentation_request.txt"; 
         ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
 
         // Now you can work with the presentations obtained from the file
