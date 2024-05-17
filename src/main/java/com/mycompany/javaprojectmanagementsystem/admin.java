@@ -950,6 +950,11 @@ public class admin extends javax.swing.JFrame {
                 "Email", "Password", "Username", "Contact No", "Designation", "Role"
             }
         ));
+        lecTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lecTable2MouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(lecTable2);
 
         lecPassword2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1431,6 +1436,11 @@ public class admin extends javax.swing.JFrame {
                 "Email", "Password", "Username", "Contact No", "Course"
             }
         ));
+        stdTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stdTable2MouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(stdTable2);
 
         stdSearch.setBackground(new java.awt.Color(0, 0, 102));
@@ -2483,9 +2493,9 @@ public class admin extends javax.swing.JFrame {
 
         // Iterate through the rows of the table to find the matching username
         for (int i = 0; i < tblModel.getRowCount(); i++) {
-            String username = tblModel.getValueAt(i, 0).toString(); // Assuming username is in the first column
+            String email = tblModel.getValueAt(i, 0).toString(); // Assuming email is in the first column
 
-            if (username.equals(searchEmail)) {
+            if (email.equals(searchEmail)) {
                 // If the email is found, populate the text fields with user information
                 lecEmail2.setText(tblModel.getValueAt(i, 0).toString()); 
                 lecPassword2.setText(tblModel.getValueAt(i, 1).toString()); 
@@ -2535,16 +2545,36 @@ public class admin extends javax.swing.JFrame {
                 stdPassword2.setText(tblModel.getValueAt(i, 1).toString()); 
                 stdUsername2.setText(tblModel.getValueAt(i, 2).toString()); 
                 stdContact2.setText(tblModel.getValueAt(i, 3).toString());  
-                stdCourse2.setSelectedIndex(-1);
+//                stdCourse2.setSelectedIndex(4);
+                // Get the course string from the table (assuming course is in the 4th column)
+                String courseString = tblModel.getValueAt(i, 4).toString();
+
+                // Find the index of the course in the combo box
+                int courseIndex = -1;
+                for (int j = 0; j < stdCourse2.getItemCount(); j++) {
+                  String itemText = stdCourse2.getItemAt(j).toString();
+                  if (itemText.equals(courseString)) {
+                    courseIndex = j;
+                    break;
+                  }
+                }
+
+                // Set the selected item in the combo box if a match is found
+                if (courseIndex > -1) {
+                  stdCourse2.setSelectedIndex(courseIndex);
+                } else {
+                  // Handle the case where the course doesn't exist
+                  System.out.println("Course not found in combo box");
+                }
 
                 found = true;
                 break;
+              }
             }
-        }
-        // If email is not found, display a message
-        if (!found) {
-            JOptionPane.showMessageDialog(this, "Email not found.");
-        }
+
+            if (!found) {
+              JOptionPane.showMessageDialog(this, "Student with email '" + searchEmail + "' not found.");
+            }
     }//GEN-LAST:event_stdSearchActionPerformed
 
     private void stdCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdCourse2ActionPerformed
@@ -2671,30 +2701,56 @@ public class admin extends javax.swing.JFrame {
             StringBuilder fileContent = new StringBuilder();
             String line;
             boolean found = false;
+
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 1 && parts[0].equals(lecturerEmail)) {
-                    parts[5] = "none,"; // Replace value at index 5 with "-"
-                    line = String.join(",", parts);
-                    found = true;
+                if (parts.length >= 6 && parts[0].trim().equals(lecturerEmail)) {
+                    if (parts[5].trim().equals("Project Manager")) {
+                        parts[5] = "none"; // Update the role to "none"
+                        line = String.join(",", parts);
+                        found = true;
+                    }
                 }
                 fileContent.append(line).append(System.lineSeparator());
             }
+
             if (!found) {
-                JOptionPane.showMessageDialog(this, "Lecturer not found in the file.");
+                JOptionPane.showMessageDialog(this, "Lecturer not found in the file or is not a Project Manager.");
                 return;
             }
+
+            // Write the updated content back to the file
             try (BufferedWriter bw = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-                bw.write(fileContent.toString());
-                JOptionPane.showMessageDialog(this, "PM role removed to the lecturer successfully.");
-                saveDataToFile(lecTable3, "lecturer.txt");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Error writing to lecturer.txt file: " + e.getMessage());
+                bw.write(fileContent.toString().trim()); // Trim to remove any trailing newline
             }
+
+            JOptionPane.showMessageDialog(this, "PM role removed from the lecturer successfully.");
+
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error reading from lecturer.txt file: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error reading or writing to lecturer.txt file: " + e.getMessage());
         }
     }//GEN-LAST:event_pmRemoveActionPerformed
+
+    private void lecTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lecTable2MouseClicked
+        // TODO add your handling code here:
+        int selectedRow = lecTable2.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) lecTable2.getModel();
+        lecEmail2.setText(model.getValueAt(selectedRow, 0).toString());
+        lecPassword2.setText(model.getValueAt(selectedRow, 1).toString());
+        lecUsername2.setText(model.getValueAt(selectedRow, 2).toString());
+        lecContact2.setText(model.getValueAt(selectedRow, 3).toString());
+//        lecDesignation2.setSelectedIndex(model.getValueAt(selectedRow, 4).toString());
+    }//GEN-LAST:event_lecTable2MouseClicked
+
+    private void stdTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stdTable2MouseClicked
+        // TODO add your handling code here:
+        int selectedRow = stdTable2.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) stdTable2.getModel();
+        stdEmail2.setText(model.getValueAt(selectedRow, 0).toString());
+        stdPassword2.setText(model.getValueAt(selectedRow, 1).toString());
+        stdUsername2.setText(model.getValueAt(selectedRow, 2).toString());
+        stdContact2.setText(model.getValueAt(selectedRow, 3).toString());
+    }//GEN-LAST:event_stdTable2MouseClicked
 
     /**
      * @param args the command line arguments

@@ -110,7 +110,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
             return true;
         } catch (IOException e) {
             System.err.println("Error occurred while saving presentation request: " + e.getMessage());
-            e.printStackTrace(); // Print the stack trace for debugging
+            e.printStackTrace();
             return false;
         }
     }
@@ -147,6 +147,10 @@ public class presentationRequestPage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         statusField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -251,6 +255,18 @@ public class presentationRequestPage extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 600, -1, -1));
 
+        jTextField1.setText("jTextField1");
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 100, -1));
+
+        jTextField2.setText("jTextField2");
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, -1, -1));
+
+        jLabel12.setText("Student ID");
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, 70, -1));
+
+        jLabel13.setText("Student Intake");
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 260, 80, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -314,6 +330,8 @@ public class presentationRequestPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -323,6 +341,8 @@ public class presentationRequestPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField reasonField;
     private javax.swing.JButton sendRequestBtn;
