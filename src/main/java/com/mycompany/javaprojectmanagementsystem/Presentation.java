@@ -5,12 +5,14 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +32,7 @@ public class Presentation {
     private final String endTime; 
     private final String reason; 
     private final String supervisor; 
-    private final String status;    
+    private String status;    
     
 
     public Presentation(String studentID, String name, String email, String intake,
@@ -94,22 +96,14 @@ public class Presentation {
         return status;
     }
     
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     @Override
     public String toString() {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        return "Presentation{" +
-                "studentID='" + studentID + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", intake='" + intake + '\'' +
-                ", topic='" + topic + '\'' +
-                ", date=" + df.format(date) +
-                ", startTime='" + startTime + '\'' +
-                ", endTime='" + endTime + '\'' +
-                ", reason='" + reason + '\'' +
-                ", supervisor='" + supervisor + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+        return String.join(",", studentID, name, email, intake, topic, df.format(date), startTime, endTime, reason, supervisor, status);
     }
     
     public static ArrayList<Presentation> readFromFile(String filePath) {
@@ -126,6 +120,19 @@ public class Presentation {
             e.printStackTrace();
         }
         return presentations;
+    }
+    
+    public static void writeToFile(ArrayList<Presentation> presentations, String filePath) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (Presentation presentation : presentations) {
+                // Convert the Presentation object to a line of text
+                // Assume a method to convert to a string exists
+                bw.write(presentation.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
   
     public static void main(String[] args) {

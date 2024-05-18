@@ -60,6 +60,31 @@ public class PresentationManager extends javax.swing.JFrame {
         }
     }
     
+        private void displayAcceptedPresentations() {
+        ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
+        DefaultTableModel model = new DefaultTableModel();
+        JTable acceptedTable = new JTable(model);
+        model.setColumnIdentifiers(new String[]{
+            "Date", "Start Time", "End Time", "Student ID", "Name", "Topic"
+        });
+
+        for (Presentation presentation : presentations) {
+            if ("Accepted".equalsIgnoreCase(presentation.getStatus())) {
+                LocalDate date = presentation.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                model.addRow(new Object[]{
+                    formattedDate, presentation.getStartTime(), presentation.getEndTime(),
+                    presentation.getStudentID(), presentation.getName(), presentation.getTopic()
+                });
+            }
+        }
+
+        // Display in a new window
+        JFrame acceptedFrame = new JFrame("Accepted Presentations");
+        acceptedFrame.setSize(800, 400);
+        acceptedFrame.add(new JScrollPane(acceptedTable));
+        acceptedFrame.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,6 +103,7 @@ public class PresentationManager extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         acceptBtn = new javax.swing.JButton();
         rejectBtn = new javax.swing.JButton();
+        viewSlot = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,7 +170,8 @@ public class PresentationManager extends javax.swing.JFrame {
         });
 
         acceptBtn.setBackground(new java.awt.Color(204, 255, 204));
-        acceptBtn.setText("jButton2");
+        acceptBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        acceptBtn.setText("Accept");
         acceptBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 acceptBtnActionPerformed(evt);
@@ -152,7 +179,22 @@ public class PresentationManager extends javax.swing.JFrame {
         });
 
         rejectBtn.setBackground(new java.awt.Color(255, 0, 0));
-        rejectBtn.setText("jButton3");
+        rejectBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        rejectBtn.setText("Reject");
+        rejectBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rejectBtnActionPerformed(evt);
+            }
+        });
+
+        viewSlot.setBackground(new java.awt.Color(102, 204, 255));
+        viewSlot.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewSlot.setText("View Presentation Slot");
+        viewSlot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSlotActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,10 +210,12 @@ public class PresentationManager extends javax.swing.JFrame {
                         .addGap(363, 363, 363)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                        .addGap(135, 135, 135)
                         .addComponent(acceptBtn)
-                        .addGap(49, 49, 49)
-                        .addComponent(rejectBtn)))
+                        .addGap(102, 102, 102)
+                        .addComponent(rejectBtn)
+                        .addGap(97, 97, 97)
+                        .addComponent(viewSlot)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -183,8 +227,9 @@ public class PresentationManager extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(acceptBtn)
-                    .addComponent(rejectBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                    .addComponent(rejectBtn)
+                    .addComponent(viewSlot))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(45, 45, 45))
         );
@@ -199,17 +244,49 @@ public class PresentationManager extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
-//        int selectedRow = jTable1.getSelectedRow();
-//        if (selectedRow == -1) {
-//            JOptionPane.showMessageDialog(this, "Please select a Field");
-//            
-//        }
-        
-//        String getStatus = jTable1.getValueAt(selectedRow, 0).toString();
-//        String filepath = "presentation_request.txt";
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to ACCEPT this presentation?", "Confirm Accept", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setValueAt("Accepted", selectedRow, 10);  
+            
+            ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
+            Presentation presentation = presentations.get(selectedRow); 
+            presentation.setStatus("Accepted");
+            Presentation.writeToFile(presentations, filePath);
+        }
 
 
     }//GEN-LAST:event_acceptBtnActionPerformed
+
+    private void rejectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rejectBtnActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a row to reject.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to reject this presentation?", "Confirm Reject", JOptionPane.YES_NO_OPTION);
+        if (response == JOptionPane.YES_OPTION) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setValueAt("Rejected", selectedRow, 10);  
+
+            // Update the file
+            ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
+            Presentation presentation = presentations.get(selectedRow);  
+            presentation.setStatus("Rejected");
+            Presentation.writeToFile(presentations, filePath); 
+        }
+    }//GEN-LAST:event_rejectBtnActionPerformed
+
+    private void viewSlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSlotActionPerformed
+        displayAcceptedPresentations();
+    }//GEN-LAST:event_viewSlotActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,5 +335,6 @@ public class PresentationManager extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton rejectBtn;
+    private javax.swing.JButton viewSlot;
     // End of variables declaration//GEN-END:variables
 }
