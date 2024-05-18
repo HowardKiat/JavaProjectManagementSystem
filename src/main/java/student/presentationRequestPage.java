@@ -4,10 +4,17 @@
  */
 package student;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 //import com.mycompany.javaprojectmanagementsystem;
 
@@ -16,7 +23,7 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class presentationRequestPage extends javax.swing.JFrame {
-    private class presentationRequest {
+    private class PresentationRequest {
         private final String name;
         private final String id;
         private final String intake;
@@ -27,10 +34,10 @@ public class presentationRequestPage extends javax.swing.JFrame {
         private final String supervisee;
         private final String status;
         private final String reason;
-        private final LocalDateTime presentationDate;   
+        private final LocalDate presentationDate;  
     
     
-    public presentationRequest(String name, String id, String intake, String email, String topic, String startTime, String endTime, String supervisee, String status, String reason, LocalDateTime presentationDate) {
+    public PresentationRequest(String name, String id, String intake, String email, String topic, String startTime, String endTime, String supervisee, String status, String reason, LocalDate presentationDate) {
         super();
         this.name = name;
         this.id = id;
@@ -48,7 +55,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
     @Override
     public String toString() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return  id + "," + name + "," + email + "," + intake + "," + topic + "," + dtf.format(presentationDate) + "," + startTime + "," + endTime + "," + reason + "," + supervisee + "," + status;
+        return id + "," + name + "," + email + "," + intake + "," + topic + "," + dtf.format(presentationDate) + "," + startTime + "," + endTime + "," + reason + "," + supervisee + "," + status;
     }
 }
     /**
@@ -57,18 +64,11 @@ public class presentationRequestPage extends javax.swing.JFrame {
     public presentationRequestPage() {
         initComponents();
         setSize(950, 700);
-
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-
         int x = (screenSize.width - getWidth()) / 2;
         int y = (screenSize.height - getHeight()) / 2;
-
         setLocation(x, y);
-        
-        // Set Pending Status to get approval
-        statusField.setText("Pending"); 
-        
-        // Make the Status field read-only
+        statusField.setText("Pending");
         statusField.setEditable(false);
     }
     
@@ -82,25 +82,32 @@ public class presentationRequestPage extends javax.swing.JFrame {
         String endTime = (String) jComboBox3.getSelectedItem();
         String reason = reasonField.getText();
         String selectSupervisee = (String) jComboBox1.getSelectedItem();
-        
-        java.util.Date selectedDate = jDateChooser1.getDate();
+        Date selectedDate = jDateChooser1.getDate();
 
         // To Check if fields are empty
-        if (name.isEmpty() || id.isEmpty() || intake.isEmpty() ||email.isEmpty() || topic.isEmpty() || reason.isEmpty() || selectedDate == null) {
+        if (name.isEmpty() || id.isEmpty() || intake.isEmpty() || email.isEmpty() || topic.isEmpty() || reason.isEmpty() || selectedDate == null) {
             JOptionPane.showMessageDialog(this, "Please fill in all the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         // Check if start time is less than or equal to end time
         if (startTime.compareTo(endTime) >= 0) {
             JOptionPane.showMessageDialog(this, "Start time should be before end time.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        LocalDateTime presentationDate = LocalDateTime.ofInstant(selectedDate.toInstant(), java.time.ZoneId.systemDefault());
 
-        //Request Presentation
-        presentationRequest pr = new presentationRequest(name, id, intake, email, topic, startTime, endTime, selectSupervisee, statusField.getText(), reason, presentationDate);
+        LocalDate presentationDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        PresentationRequest pr = new PresentationRequest(name, id, intake, email, topic, startTime, endTime, selectSupervisee, statusField.getText(), reason, presentationDate);
+        List<PresentationRequest> existingRequests = readExistingRequests();
+
+        if (!existingRequests.isEmpty() && isConflict(pr, existingRequests)) {
+            int response = JOptionPane.showConfirmDialog(this, "The selected supervisor is already occupied at the chosen time. Would you like to view the supervisor's schedule?", "Conflict", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                displaySupervisorSchedule(selectSupervisee);
+            }
+            return;
+        }
         
         //Saves the request and validate the request
         if (savePresentationRequest(pr)) {
@@ -108,13 +115,18 @@ public class presentationRequestPage extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Failed to send presentation request. Please try again later.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }    
     
-    private boolean savePresentationRequest(presentationRequest pr) {
+    private void displaySupervisorSchedule(String supervisor) {
+    // Implement this method to show the supervisor's schedule
+    // This could be a new window or a dialog displaying the schedule
+        JOptionPane.showMessageDialog(this, "Supervisor's schedule functionality is not yet implemented.", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private boolean savePresentationRequest(PresentationRequest pr) {
         String file = "presentation_request.txt";
 
         try (FileWriter writer = new FileWriter(file, true)) {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             writer.write(pr.toString() + "\n");
             System.out.println("Presentation request saved to " + file);
             return true;
@@ -123,6 +135,48 @@ public class presentationRequestPage extends javax.swing.JFrame {
             e.printStackTrace();
             return false;
         }
+    }
+    
+    private List<PresentationRequest> readExistingRequests() {
+        List<PresentationRequest> requests = new ArrayList<>();
+        String file = "presentation_request.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 11) {
+                    String id = parts[0];
+                    String name = parts[1];
+                    String email = parts[2];
+                    String intake = parts[3];
+                    String topic = parts[4];
+                    LocalDate presentationDate = LocalDate.parse(parts[5], dtf);
+                    String startTime = parts[6];
+                    String endTime = parts[7];
+                    String reason = parts[8];
+                    String supervisee = parts[9];
+                    String status = parts[10];
+                    requests.add(new PresentationRequest(name, id, intake, email, topic, startTime, endTime, supervisee, status, reason, presentationDate));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error occurred while reading presentation requests: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return requests;
+    }
+    
+    private boolean isConflict(PresentationRequest newRequest, List<PresentationRequest> existingRequests) {
+        for (PresentationRequest existingRequest : existingRequests) {
+            if (existingRequest.supervisee.equals(newRequest.supervisee) &&
+                existingRequest.presentationDate.equals(newRequest.presentationDate) &&
+                existingRequest.startTime.equals(newRequest.startTime) &&
+                existingRequest.endTime.equals(newRequest.endTime)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
