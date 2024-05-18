@@ -5,6 +5,7 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import com.mycompany.javaprojectmanagementsystem.home;
+import com.mycompany.javaprojectmanagementsystem.home;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.io.BufferedReader;
@@ -16,6 +17,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -74,6 +78,15 @@ public class admin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Error loading data for table: " + e.getMessage());
             }
         }
+    }
+    
+    // Method to generate a unique student ID
+    private String generateStudentID() {
+        // You can generate a unique ID based on timestamp, random numbers, or any other method
+        // For simplicity, let's generate a random 6-digit ID
+        Random random = new Random();
+        int id = 100000 + random.nextInt(900000); // Generates a random 6-digit number
+        return "TP" + id; // Prefix the ID with "STD" to indicate it's a student ID
     }
     
     /**
@@ -200,6 +213,8 @@ public class admin extends javax.swing.JFrame {
         stdRegister = new javax.swing.JButton();
         backB1 = new javax.swing.JButton();
         stdPassword = new javax.swing.JPasswordField();
+        jCalendar1 = new com.toedter.calendar.JCalendar();
+        jLabel48 = new javax.swing.JLabel();
         p1_removeStd = new javax.swing.JPanel();
         header5 = new javax.swing.JPanel();
         jLabel65 = new javax.swing.JLabel();
@@ -213,20 +228,19 @@ public class admin extends javax.swing.JFrame {
         stdContact2 = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         stdTable2 = new javax.swing.JTable();
-        stdSearch = new javax.swing.JButton();
         jLabel69 = new javax.swing.JLabel();
         stdCourse2 = new javax.swing.JComboBox<>();
         stdEdit = new javax.swing.JButton();
         backB9 = new javax.swing.JButton();
         stdPassword2 = new javax.swing.JTextField();
-        tfStdSearch = new javax.swing.JTextField();
         jLabel70 = new javax.swing.JLabel();
-        jLabel77 = new javax.swing.JLabel();
         stdEmail2 = new javax.swing.JTextField();
         jLabel78 = new javax.swing.JLabel();
         stdUsername2 = new javax.swing.JTextField();
         jLabel79 = new javax.swing.JLabel();
         jLabel80 = new javax.swing.JLabel();
+        jCalendar2 = new com.toedter.calendar.JCalendar();
+        jLabel49 = new javax.swing.JLabel();
         p2 = new javax.swing.JPanel();
         header7 = new javax.swing.JPanel();
         jLabel66 = new javax.swing.JLabel();
@@ -665,7 +679,7 @@ public class admin extends javax.swing.JFrame {
         lecDesignation.setBackground(new java.awt.Color(255, 255, 255));
         lecDesignation.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         lecDesignation.setForeground(new java.awt.Color(0, 0, 0));
-        lecDesignation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Designation", "Head of School", "Senior", "Junior", "Part Time" }));
+        lecDesignation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head of School", "Senior", "Junior", "Part Time" }));
         lecDesignation.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         lecDesignation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -896,7 +910,7 @@ public class admin extends javax.swing.JFrame {
         lecDesignation2.setBackground(new java.awt.Color(255, 255, 255));
         lecDesignation2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         lecDesignation2.setForeground(new java.awt.Color(0, 0, 0));
-        lecDesignation2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Designation", "Head of School", "Senior", "Junior", "Part Time" }));
+        lecDesignation2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head of School", "Senior", "Junior", "Part Time" }));
         lecDesignation2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         lecDesignation2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1213,7 +1227,7 @@ public class admin extends javax.swing.JFrame {
         stdCourse.setBackground(new java.awt.Color(255, 255, 255));
         stdCourse.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         stdCourse.setForeground(new java.awt.Color(0, 0, 0));
-        stdCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Course", "Software Engineering", "Data Analysis", "Multimedia", "Artificial Inteligence", "Fintech" }));
+        stdCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Software Engineering", "Data Analysis", "Multimedia", "Artificial Inteligence", "Fintech" }));
         stdCourse.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         stdCourse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1247,38 +1261,40 @@ public class admin extends javax.swing.JFrame {
         stdPassword.setForeground(new java.awt.Color(0, 0, 0));
         stdPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
+        jLabel48.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel48.setText("Intake :");
+
         javax.swing.GroupLayout p1_addStdLayout = new javax.swing.GroupLayout(p1_addStd);
         p1_addStd.setLayout(p1_addStdLayout);
         p1_addStdLayout.setHorizontalGroup(
             p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(p1_addStdLayout.createSequentialGroup()
+                .addGap(121, 121, 121)
                 .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel44)
+                        .addComponent(jLabel43)
+                        .addComponent(jLabel42)
+                        .addComponent(stdUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                        .addComponent(stdEmail)
+                        .addComponent(jLabel45)
+                        .addComponent(stdPassword)
+                        .addComponent(stdContact))
                     .addGroup(p1_addStdLayout.createSequentialGroup()
-                        .addGap(291, 291, 291)
+                        .addGap(170, 170, 170)
                         .addComponent(stdRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(p1_addStdLayout.createSequentialGroup()
-                        .addGap(329, 329, 329)
+                        .addGap(208, 208, 208)
                         .addComponent(backB1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_addStdLayout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel44)
-                            .addComponent(jLabel43)
-                            .addComponent(jLabel42)
-                            .addComponent(stdUsername)
-                            .addComponent(stdEmail)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_addStdLayout.createSequentialGroup()
-                                .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel45)
-                                    .addComponent(stdContact, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(33, 33, 33)
-                                .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(p1_addStdLayout.createSequentialGroup()
-                                        .addComponent(jLabel46)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(stdCourse, 0, 238, Short.MAX_VALUE)))
-                            .addComponent(stdPassword))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_addStdLayout.createSequentialGroup()
+                        .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel46)
+                            .addComponent(stdCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel48))))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
         p1_addStdLayout.setVerticalGroup(
@@ -1297,22 +1313,23 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jLabel44)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(stdUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdContact, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel45)
-                    .addComponent(jLabel46))
+                    .addComponent(jLabel46)
+                    .addComponent(jLabel48))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(p1_addStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(p1_addStdLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(stdContact, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_addStdLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stdCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61)
+                    .addComponent(stdCourse, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCalendar1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(stdRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(backB1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         centrePanel.add(p1_addStd, "card7");
@@ -1349,13 +1366,13 @@ public class admin extends javax.swing.JFrame {
 
         stdTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Email", "Password", "Username", "Contact No", "Course"
+                "Email", "Password", "Student ID", "Username", "Contact No", "Course", "Intake"
             }
         ));
         jScrollPane2.setViewportView(stdTable);
@@ -1414,26 +1431,26 @@ public class admin extends javax.swing.JFrame {
 
         stdTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Email", "Password", "Username", "Contact No", "Course"
+                "Email", "Password", "Student ID", "Username", "Contact No", "Course", "Intake"
             }
         ));
         stdTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1443,24 +1460,13 @@ public class admin extends javax.swing.JFrame {
         });
         jScrollPane6.setViewportView(stdTable2);
 
-        stdSearch.setBackground(new java.awt.Color(0, 0, 102));
-        stdSearch.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        stdSearch.setForeground(new java.awt.Color(255, 255, 255));
-        stdSearch.setText("Search");
-        stdSearch.setBorderPainted(false);
-        stdSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stdSearchActionPerformed(evt);
-            }
-        });
-
         jLabel69.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel69.setText("Course :");
 
         stdCourse2.setBackground(new java.awt.Color(255, 255, 255));
         stdCourse2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         stdCourse2.setForeground(new java.awt.Color(0, 0, 0));
-        stdCourse2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Course", "Software Engineering", "Data Analysis", "Multimedia", "Aritificial Inteligence", "Fintech" }));
+        stdCourse2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Software Engineering", "Data Analysis", "Multimedia", "Aritificial Inteligence", "Fintech" }));
         stdCourse2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         stdCourse2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1500,21 +1506,8 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        tfStdSearch.setBackground(new java.awt.Color(255, 255, 255));
-        tfStdSearch.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        tfStdSearch.setForeground(new java.awt.Color(0, 0, 0));
-        tfStdSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
-        tfStdSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfStdSearchActionPerformed(evt);
-            }
-        });
-
         jLabel70.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel70.setText("Email Address : ");
-
-        jLabel77.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        jLabel77.setText("Search :");
 
         stdEmail2.setBackground(new java.awt.Color(255, 255, 255));
         stdEmail2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
@@ -1540,48 +1533,49 @@ public class admin extends javax.swing.JFrame {
         jLabel80.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel80.setText("Contact No :");
 
+        jLabel49.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
+        jLabel49.setText("Intake :");
+
         javax.swing.GroupLayout p1_manageStdLayout = new javax.swing.GroupLayout(p1_manageStd);
         p1_manageStd.setLayout(p1_manageStdLayout);
         p1_manageStdLayout.setHorizontalGroup(
             p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(header6, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
             .addGroup(p1_manageStdLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
                 .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(p1_manageStdLayout.createSequentialGroup()
-                        .addGap(131, 131, 131)
                         .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel77)
-                            .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel79)
-                                .addComponent(jLabel78)
-                                .addComponent(jLabel70)
-                                .addComponent(stdEmail2)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p1_manageStdLayout.createSequentialGroup()
-                                    .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel80)
-                                        .addComponent(stdContact2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(33, 33, 33)
-                                    .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(p1_manageStdLayout.createSequentialGroup()
-                                            .addComponent(jLabel69)
-                                            .addGap(0, 0, Short.MAX_VALUE))
-                                        .addComponent(stdCourse2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addComponent(stdPassword2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(stdUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(p1_manageStdLayout.createSequentialGroup()
-                                .addComponent(tfStdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(stdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(p1_manageStdLayout.createSequentialGroup()
                                 .addGap(166, 166, 166)
                                 .addComponent(stdEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(p1_manageStdLayout.createSequentialGroup()
                                 .addGap(204, 204, 204)
-                                .addComponent(backB9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(backB9, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(221, 302, Short.MAX_VALUE))
+                    .addGroup(p1_manageStdLayout.createSequentialGroup()
+                        .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel79)
+                            .addComponent(jLabel78)
+                            .addComponent(jLabel70)
+                            .addComponent(stdEmail2)
+                            .addComponent(jLabel80)
+                            .addComponent(stdPassword2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                            .addComponent(stdUsername2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                            .addComponent(stdContact2)
+                            .addGroup(p1_manageStdLayout.createSequentialGroup()
+                                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel69)
+                                    .addComponent(stdCourse2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel49)
+                                    .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(p1_manageStdLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         p1_manageStdLayout.setVerticalGroup(
             p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1589,12 +1583,6 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(header6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel77)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfStdSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stdSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel70)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1608,17 +1596,23 @@ public class admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(stdUsername2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel80)
-                    .addComponent(jLabel69))
+                .addComponent(jLabel80)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stdContact2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(p1_manageStdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stdCourse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stdContact2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(stdEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(backB9)
+                    .addGroup(p1_manageStdLayout.createSequentialGroup()
+                        .addComponent(jLabel69)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stdCourse2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8)
+                        .addComponent(stdEdit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(backB9))
+                    .addGroup(p1_manageStdLayout.createSequentialGroup()
+                        .addComponent(jLabel49)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 26, Short.MAX_VALUE))
         );
 
@@ -1693,13 +1687,13 @@ public class admin extends javax.swing.JFrame {
 
         stdTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Email", "Password", "Username", "Contact No", "Course"
+                "Email", "Password", "Student ID", "Username", "Contact No", "Course", "Intake"
             }
         ));
         jScrollPane4.setViewportView(stdTable1);
@@ -2024,15 +2018,24 @@ public class admin extends javax.swing.JFrame {
 
     private void lecRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lecRegisterActionPerformed
         // TODO add your handling code here:
-        // Get the username and password entered by the user
+        // Get the username, email, and password entered by the user
         String lecemail = lecEmail.getText();
         char[] passwordCharArray = lecPassword.getPassword();
         String lecpassword = new String(passwordCharArray);
         String lecusername = lecUsername.getText();
+        String leccontactText = lecContact.getText();
+        String lecdesignation = (String) lecDesignation.getSelectedItem();
+
+        // Check if any field is empty
+        if (lecemail.isEmpty() || lecpassword.isEmpty() || lecusername.isEmpty() || leccontactText.isEmpty() || lecdesignation == null) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         // Parse the contact number from the text field
         int leccontact = 0; // Default value
         try {
-            leccontact = Integer.parseInt(lecContact.getText());
+            leccontact = Integer.parseInt(leccontactText);
         } catch (NumberFormatException e) {
             // Handle the case where the text is not a valid integer
             // Show an error message to the user
@@ -2042,9 +2045,6 @@ public class admin extends javax.swing.JFrame {
             // You may also choose to set a default value or take other appropriate action
             return;
         }
-        // Get the text from the combo box
-        String lecdesignation = (String) lecDesignation.getSelectedItem();
-        
 
         // Define the filename and path where user data is stored
         String filename = "lecturer.txt"; // Change this to your desired filename
@@ -2059,11 +2059,11 @@ public class admin extends javax.swing.JFrame {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
-                String existinglecEmail= parts[0];
+                String existinglecEmail = parts[0];
 
                 if (existinglecEmail.equals(lecemail)) {
                     lecemailExists = true;
-                    break; // Username already exists, no need to check further
+                    break; // Email already exists, no need to check further
                 }
             }
 
@@ -2071,7 +2071,7 @@ public class admin extends javax.swing.JFrame {
             bufferedReader.close();
 
             if (lecemailExists) {
-                // Display an error message if the username is already in use
+                // Display an error message if the email is already in use
                 JOptionPane.showMessageDialog(this, "Email already exists. Please choose a different email.");
             } else {
                 // Create a FileWriter to write to the text file (true appends to the file)
@@ -2084,7 +2084,7 @@ public class admin extends javax.swing.JFrame {
                 bufferedWriter.write(lecusername + ",");
                 bufferedWriter.write(leccontact + ",");
                 bufferedWriter.write(lecdesignation + ",");
-                bufferedWriter.write( "none,");
+                bufferedWriter.write("none,");
                 bufferedWriter.newLine();
 
                 // Close the BufferedWriter
@@ -2093,7 +2093,7 @@ public class admin extends javax.swing.JFrame {
                 // Inform the user that registration was successful
                 JOptionPane.showMessageDialog(this, "Registration successful! Data saved to " + filename);
 
-                //Clear all text field
+                // Clear all text fields
                 lecEmail.setText("");
                 lecPassword.setText("");
                 lecUsername.setText("");
@@ -2145,15 +2145,25 @@ public class admin extends javax.swing.JFrame {
 
     private void stdRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdRegisterActionPerformed
         // TODO add your handling code here:
-        // Get the username and password entered by the user
+        // Get the username, password, and other details entered by the user
         String stdemail = stdEmail.getText();
         char[] passwordCharArray = stdPassword.getPassword();
         String stdpassword = new String(passwordCharArray);
         String stdusername = stdUsername.getText();
-        // Parse the contact number from the text field
+        String stdContactText = stdContact.getText();
+        String stdcourse = (String) stdCourse.getSelectedItem();
+
+        // Check if any of the required fields are empty
+        if (stdemail.isEmpty() || stdpassword.isEmpty() || stdusername.isEmpty() || stdContactText.isEmpty() || stdcourse.isEmpty() || jCalendar1.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         int stdcontact = 0; // Default value
+
+        // Parse the contact number from the text field
         try {
-            stdcontact = Integer.parseInt(stdContact.getText());
+            stdcontact = Integer.parseInt(stdContactText);
         } catch (NumberFormatException e) {
             // Handle the case where the text is not a valid integer
             // Show an error message to the user
@@ -2163,11 +2173,13 @@ public class admin extends javax.swing.JFrame {
             // You may also choose to set a default value or take other appropriate action
             return;
         }
-        // Get the text from the combo box
-        String stdcourse = (String) stdCourse.getSelectedItem();
-//        stdCourse = new JComboBox<String>();
 
-        
+        // Get the selected intake date from the calendar
+        Date intakeDate = jCalendar1.getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(intakeDate);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1; // Calendar month is zero-based, so add 1
 
         // Define the filename and path where user data is stored
         String filename = "student.txt"; // Change this to your desired filename
@@ -2182,11 +2194,11 @@ public class admin extends javax.swing.JFrame {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
-                String existingstdEmail= parts[0];
+                String existingstdEmail = parts[0];
 
                 if (existingstdEmail.equals(stdemail)) {
                     stdemailExists = true;
-                    break; // Username already exists, no need to check further
+                    break; // Email already exists, no need to check further
                 }
             }
 
@@ -2194,9 +2206,12 @@ public class admin extends javax.swing.JFrame {
             bufferedReader.close();
 
             if (stdemailExists) {
-                // Display an error message if the username is already in use
+                // Display an error message if the email is already in use
                 JOptionPane.showMessageDialog(this, "Email already exists. Please choose a different email.");
             } else {
+                // Generate a unique student ID
+                String studentID = generateStudentID();
+
                 // Create a FileWriter to write to the text file (true appends to the file)
                 FileWriter fileWriter = new FileWriter(filename, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -2204,9 +2219,11 @@ public class admin extends javax.swing.JFrame {
                 // Write the registration data to the file
                 bufferedWriter.write(stdemail + ",");
                 bufferedWriter.write(stdpassword + ",");
+                bufferedWriter.write(studentID + ",");
                 bufferedWriter.write(stdusername + ",");
                 bufferedWriter.write(stdcontact + ",");
                 bufferedWriter.write(stdcourse + ",");
+                bufferedWriter.write(month + "-" + year + ","); // Write the intake month and year
                 bufferedWriter.newLine();
 
                 // Close the BufferedWriter
@@ -2215,12 +2232,11 @@ public class admin extends javax.swing.JFrame {
                 // Inform the user that registration was successful
                 JOptionPane.showMessageDialog(this, "Registration successful! Data saved to " + filename);
 
-                //Clear all text field
+                // Clear all text fields and combo box selection
                 stdEmail.setText("");
                 stdPassword.setText("");
                 stdUsername.setText("");
                 stdContact.setText("");
-                // If lecDesignation is a JComboBox, you might want to clear its selection too
                 stdCourse.setSelectedIndex(-1);
             }
         } catch (IOException e) {
@@ -2521,90 +2537,64 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_stdContact2ActionPerformed
 
-    private void stdSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdSearchActionPerformed
-        // TODO add your handling code here:
-        // Get the username to search for
-        String searchEmail = tfStdSearch.getText();
-
-        // Check if the search field is empty
-        if (searchEmail.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter an email to search.");
-            return;
-        }
-
-        DefaultTableModel tblModel = (DefaultTableModel) stdTable2.getModel();
-        boolean found = false;
-
-        // Iterate through the rows of the table to find the matching username
-        for (int i = 0; i < tblModel.getRowCount(); i++) {
-            String email = tblModel.getValueAt(i, 0).toString(); // Assuming username is in the first column
-
-            if (email.equals(searchEmail)) {
-                // If the email is found, populate the text fields with user information
-                stdEmail2.setText(tblModel.getValueAt(i, 0).toString()); 
-                stdPassword2.setText(tblModel.getValueAt(i, 1).toString()); 
-                stdUsername2.setText(tblModel.getValueAt(i, 2).toString()); 
-                stdContact2.setText(tblModel.getValueAt(i, 3).toString());  
-//                stdCourse2.setSelectedIndex(4);
-                // Get the course string from the table (assuming course is in the 4th column)
-                String courseString = tblModel.getValueAt(i, 4).toString();
-
-                // Find the index of the course in the combo box
-                int courseIndex = -1;
-                for (int j = 0; j < stdCourse2.getItemCount(); j++) {
-                  String itemText = stdCourse2.getItemAt(j).toString();
-                  if (itemText.equals(courseString)) {
-                    courseIndex = j;
-                    break;
-                  }
-                }
-
-                // Set the selected item in the combo box if a match is found
-                if (courseIndex > -1) {
-                  stdCourse2.setSelectedIndex(courseIndex);
-                } else {
-                  // Handle the case where the course doesn't exist
-                  System.out.println("Course not found in combo box");
-                }
-
-                found = true;
-                break;
-              }
-            }
-
-            if (!found) {
-              JOptionPane.showMessageDialog(this, "Student with email '" + searchEmail + "' not found.");
-            }
-    }//GEN-LAST:event_stdSearchActionPerformed
-
     private void stdCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdCourse2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stdCourse2ActionPerformed
 
     private void stdEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdEditActionPerformed
         // TODO add your handling code here:
+        // Get the table model and the selected row
         DefaultTableModel tblModel = (DefaultTableModel) stdTable2.getModel();
         int selectedRow = stdTable2.getSelectedRow();
 
+        // Check if a row is selected
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a row to modify.");
             return;
         }
 
-        if (stdEmail2.getText().equals("") || stdPassword2.getText().equals("") || stdUsername2.getText().equals("") || stdContact2.getText().equals("") || stdCourse2.getSelectedIndex() == -1) {
+        // Check if any of the required fields are empty
+        if (stdEmail2.getText().isEmpty() || stdPassword2.getText().isEmpty() || stdUsername2.getText().isEmpty() || stdContact2.getText().isEmpty() || stdCourse2.getSelectedIndex() == -1) {
             JOptionPane.showMessageDialog(this, "Please Enter All Data!");
             return;
         }
 
-        String newData[] = { stdEmail2.getText(), stdPassword2.getText(), stdUsername2.getText(), stdContact2.getText(), stdCourse2.getSelectedItem().toString() };
+        // Retrieve the existing Student ID from the selected row
+        String existingStudentID = tblModel.getValueAt(selectedRow, 2).toString();
 
-        for (int i = 0; i < tblModel.getColumnCount(); i++) {
+        // Get the selected intake date from the calendar
+        Date intakeDate = jCalendar2.getDate();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(intakeDate);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1; // Calendar month is zero-based, so add 1
+
+        // Format the intake date
+        String intakeDateString = month + "-" + year;
+
+        // Get the new data entered by the user
+        String newData[] = {
+            stdEmail2.getText(),
+            stdPassword2.getText(),
+            existingStudentID,
+            stdUsername2.getText(),
+            stdContact2.getText(),
+            stdCourse2.getSelectedItem().toString(),
+            intakeDateString // Include the intake date in the newData array
+        };
+
+        // Update the data in the selected row
+        for (int i = 0; i < newData.length; i++) {
             tblModel.setValueAt(newData[i], selectedRow, i);
         }
 
+        // Inform the user that data was modified successfully
         JOptionPane.showMessageDialog(this, "Data Modified Successfully!");
+
+        // Save the modified data to the file
         saveDataToFile(stdTable2, "student.txt");
-        //Clear all text field
+
+        // Clear all text fields and combo box selection
         stdEmail2.setText("");
         stdPassword2.setText("");
         stdUsername2.setText("");
@@ -2627,10 +2617,6 @@ public class admin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_stdPassword2ActionPerformed
 
-    private void tfStdSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfStdSearchActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfStdSearchActionPerformed
-
     private void stdEmail2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stdEmail2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_stdEmail2ActionPerformed
@@ -2650,28 +2636,33 @@ public class admin extends javax.swing.JFrame {
             StringBuilder fileContent = new StringBuilder();
             String line;
             boolean found = false;
+
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 1 && parts[0].equals(lecturerEmail)) {
-                    parts[5] = "Project Manager,"; // Replace value at index 5 with "Project Manager"
-                    line = String.join(",", parts);
-                    found = true;
+                if (parts.length >= 6 && parts[0].trim().equals(lecturerEmail)) {
+                    if (parts[5].trim().equals("none")) {
+                        parts[5] = "Project Manager"; // Update the role to "Project Manager"
+                        line = String.join(",", parts);
+                        found = true;
+                    }
                 }
                 fileContent.append(line).append(System.lineSeparator());
             }
+
             if (!found) {
-                JOptionPane.showMessageDialog(this, "Lecturer not found in the file.");
+                JOptionPane.showMessageDialog(this, "Lecturer not found in the file or is already a Project Manager.");
                 return;
             }
+
+            // Write the updated content back to the file
             try (BufferedWriter bw = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
-                bw.write(fileContent.toString());
-                JOptionPane.showMessageDialog(this, "PM role assigned to the lecturer successfully.");
-                saveDataToFile(lecTable3, "lecturer.txt");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Error writing to lecturer.txt file: " + e.getMessage());
+                bw.write(fileContent.toString().trim()); // Trim to remove any trailing newline
             }
+
+            JOptionPane.showMessageDialog(this, "PM role assigned from the lecturer successfully.");
+
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error reading from lecturer.txt file: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error reading or writing to lecturer.txt file: " + e.getMessage());
         }
     }//GEN-LAST:event_pmAssignActionPerformed
 
@@ -2748,8 +2739,8 @@ public class admin extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) stdTable2.getModel();
         stdEmail2.setText(model.getValueAt(selectedRow, 0).toString());
         stdPassword2.setText(model.getValueAt(selectedRow, 1).toString());
-        stdUsername2.setText(model.getValueAt(selectedRow, 2).toString());
-        stdContact2.setText(model.getValueAt(selectedRow, 3).toString());
+        stdUsername2.setText(model.getValueAt(selectedRow, 3).toString());
+        stdContact2.setText(model.getValueAt(selectedRow, 4).toString());
     }//GEN-LAST:event_stdTable2MouseClicked
 
     /**
@@ -2815,6 +2806,8 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel header7;
     private javax.swing.JPanel header8;
     private javax.swing.JPanel headerPanel;
+    private com.toedter.calendar.JCalendar jCalendar1;
+    private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -2856,6 +2849,8 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
@@ -2873,7 +2868,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
-    private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
@@ -2942,7 +2936,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField stdPassword2;
     private javax.swing.JButton stdRegister;
     private javax.swing.JButton stdRemove;
-    private javax.swing.JButton stdSearch;
     private javax.swing.JTable stdTable;
     private javax.swing.JTable stdTable1;
     private javax.swing.JTable stdTable2;
@@ -2950,7 +2943,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField stdUsername2;
     private javax.swing.JPanel student;
     private javax.swing.JTextField tfLecSearch;
-    private javax.swing.JTextField tfStdSearch;
     private javax.swing.JLabel username;
     private javax.swing.JPanel viewProfile;
     // End of variables declaration//GEN-END:variables
