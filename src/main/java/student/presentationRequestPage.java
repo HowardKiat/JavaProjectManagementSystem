@@ -4,6 +4,7 @@
  */
 package student;
 
+import com.mycompany.javaprojectmanagementsystem.student;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -70,6 +71,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
         setLocation(x, y);
         statusField.setText("Pending");
         statusField.setEditable(false);
+        appendLecturers();
     }
     
     private void sendRequest() {
@@ -178,6 +180,20 @@ public class presentationRequestPage extends javax.swing.JFrame {
         }
         return false;
     }
+    
+    private void appendLecturers() {
+        try (BufferedReader br = new BufferedReader(new FileReader("lecturer.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 6) {
+                    jComboBox1.addItem(parts[2]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -248,10 +264,11 @@ public class presentationRequestPage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel15)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel14))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 80));
@@ -274,7 +291,6 @@ public class presentationRequestPage extends javax.swing.JFrame {
         jLabel8.setText("End-Time");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 200, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -284,21 +300,9 @@ public class presentationRequestPage extends javax.swing.JFrame {
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar2-icon.png"))); // NOI18N
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, 50, -1));
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 130, -1));
         getContentPane().add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 130, -1));
         getContentPane().add(topicField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 130, -1));
-
-        reasonField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reasonFieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(reasonField, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, 360, 70));
         getContentPane().add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, 160, 30));
 
@@ -309,11 +313,6 @@ public class presentationRequestPage extends javax.swing.JFrame {
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, -1, -1));
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:00am", "10:00am", "11:00am", "12:00pm", "13:00pm", "14:00pm", "15:00pm", "16:00pm", "17:00pm", "18:00pm", " " }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
         getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, -1, -1));
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:00am", "10:00am", "11:00am", "12:00pm", "13:00pm", "14:00pm", "15:00pm", "16:00pm", "17:00pm", "18:00pm" }));
@@ -338,12 +337,6 @@ public class presentationRequestPage extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 490, -1, -1));
-
-        idField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idFieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 130, -1));
         getContentPane().add(intakeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 130, -1));
 
@@ -357,7 +350,23 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+//        try {
+//            // Create a BufferedReader to read the file
+//            BufferedReader br = new BufferedReader(new FileReader("lecturer.txt"));
+//            String line;
+//            // Clear the existing items in the JComboBox
+//            jComboBox1.removeAllItems();
+//            // Read each line from the file
+//            while ((line = br.readLine()) != null) {
+//                String[] parts = line.split(",");
+//                if (parts.length >= 6) {
+//                    jComboBox1.addItem(parts[2]);
+//                }
+//            }
+//            br.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void sendRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendRequestBtnActionPerformed
@@ -366,25 +375,9 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-//        back to STUDENT DASHBOARD
+        new student().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void reasonFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reasonFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reasonFieldActionPerformed
-
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
-
-    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idFieldActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
