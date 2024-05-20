@@ -350,27 +350,10 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-//        try {
-//            // Create a BufferedReader to read the file
-//            BufferedReader br = new BufferedReader(new FileReader("lecturer.txt"));
-//            String line;
-//            // Clear the existing items in the JComboBox
-//            jComboBox1.removeAllItems();
-//            // Read each line from the file
-//            while ((line = br.readLine()) != null) {
-//                String[] parts = line.split(",");
-//                if (parts.length >= 6) {
-//                    jComboBox1.addItem(parts[2]);
-//                }
-//            }
-//            br.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void sendRequestBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendRequestBtnActionPerformed
-        // TODO add your handling code here:
         sendRequest();
     }//GEN-LAST:event_sendRequestBtnActionPerformed
 

@@ -1,2 +1,3 @@
 weihao@gmail.com,asd,TP362687,wei hao,123124124,Software Engineering,5-2024,
 itachi@gmail.com,asd,TP383395,itachiiii,41213190,Artificial Inteligence,8-2024,
+yizun,123,TP201346,Yizun,12000000,Software Engineering,5-2024,

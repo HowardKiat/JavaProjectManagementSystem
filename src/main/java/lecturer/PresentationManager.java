@@ -27,6 +27,11 @@ public class PresentationManager extends javax.swing.JFrame {
     public PresentationManager() {
         super(); 
         initComponents();
+        setSize(1200, 700);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
         displayPresentation();
     }
     
