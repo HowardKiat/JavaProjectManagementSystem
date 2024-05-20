@@ -30,14 +30,22 @@ import javax.swing.table.DefaultTableModel;
  * @author limji
  */
 public class admin extends javax.swing.JFrame {
+
+    private final String adminName;
     /**
      * Creates new form admin
      */
-    public admin() {
+    public admin(String name) {
+        this.adminName = name;
         initComponents();
         loadDataFromFile("lecturer.txt", lecTable);
         loadDataFromFile("student.txt", stdTable);
+        jTextField1.setText(adminName);
+        jTextField1.setEditable(false); // Make the text field non-editable
+
+
     }
+
     
     private void saveDataToFile(JTable table, String filename) {
         try {
@@ -101,7 +109,6 @@ public class admin extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
         sidePanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        adminUsername = new javax.swing.JLabel();
         adminDesignation = new javax.swing.JLabel();
         dashboard = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -117,6 +124,7 @@ public class admin extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         viewProfile = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
         headerPanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         centrePanel = new javax.swing.JPanel();
@@ -281,13 +289,7 @@ public class admin extends javax.swing.JFrame {
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-icon.png"))); // NOI18N
-        sidePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 80));
-
-        adminUsername.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        adminUsername.setForeground(new java.awt.Color(0, 204, 0));
-        adminUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adminUsername.setText("Username");
-        sidePanel.add(adminUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 130, 20));
+        sidePanel.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 70));
 
         adminDesignation.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         adminDesignation.setForeground(new java.awt.Color(102, 204, 255));
@@ -410,6 +412,13 @@ public class admin extends javax.swing.JFrame {
 
         sidePanel.add(viewProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 90, 30));
 
+        jTextField1.setBackground(new java.awt.Color(0, 0, 104));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(0, 204, 0));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setBorder(null);
+        sidePanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+
         mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 600));
 
         headerPanel.setBackground(new java.awt.Color(0, 0, 0));
@@ -436,7 +445,6 @@ public class admin extends javax.swing.JFrame {
         jLabel13.setText("Welcome to Admin Panel");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Lecturer Section");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -511,7 +519,6 @@ public class admin extends javax.swing.JFrame {
         addPM.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
         jLabel24.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
         jLabel24.setText("Student Section");
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -575,10 +582,6 @@ public class admin extends javax.swing.JFrame {
             .addGroup(p1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(p1Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel25))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(p1Layout.createSequentialGroup()
                         .addComponent(jLabel14)
@@ -586,17 +589,23 @@ public class admin extends javax.swing.JFrame {
                         .addComponent(jLabel16))
                     .addComponent(jLabel13)
                     .addGroup(p1Layout.createSequentialGroup()
-                        .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(addStudent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addLecturer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(removeLecturer, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(removeStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(manageLecturer, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(manageStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(p1Layout.createSequentialGroup()
+                                .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(addStudent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(addLecturer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(removeLecturer, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(removeStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(p1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(manageLecturer, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(manageStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(p1Layout.createSequentialGroup()
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel25)))
                         .addGap(18, 18, 18)
                         .addComponent(addPM, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(16, Short.MAX_VALUE))
@@ -644,9 +653,7 @@ public class admin extends javax.swing.JFrame {
         jLabel36.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel36.setText("Email Address : ");
 
-        lecEmail.setBackground(new java.awt.Color(255, 255, 255));
         lecEmail.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecEmail.setForeground(new java.awt.Color(0, 0, 0));
         lecEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         lecEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -657,9 +664,7 @@ public class admin extends javax.swing.JFrame {
         jLabel37.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel37.setText("Password :");
 
-        lecUsername.setBackground(new java.awt.Color(255, 255, 255));
         lecUsername.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecUsername.setForeground(new java.awt.Color(0, 0, 0));
         lecUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel38.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -668,17 +673,13 @@ public class admin extends javax.swing.JFrame {
         jLabel39.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel39.setText("Contact No :");
 
-        lecContact.setBackground(new java.awt.Color(255, 255, 255));
         lecContact.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecContact.setForeground(new java.awt.Color(0, 0, 0));
         lecContact.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel40.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel40.setText("Designation :");
 
-        lecDesignation.setBackground(new java.awt.Color(255, 255, 255));
         lecDesignation.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecDesignation.setForeground(new java.awt.Color(0, 0, 0));
         lecDesignation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head of School", "Senior", "Junior", "Part Time" }));
         lecDesignation.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         lecDesignation.addActionListener(new java.awt.event.ActionListener() {
@@ -709,8 +710,6 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        lecPassword.setBackground(new java.awt.Color(255, 255, 255));
-        lecPassword.setForeground(new java.awt.Color(0, 0, 0));
         lecPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         javax.swing.GroupLayout p1_addLecLayout = new javax.swing.GroupLayout(p1_addLec);
@@ -870,9 +869,7 @@ public class admin extends javax.swing.JFrame {
         jLabel54.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel54.setText("Email Address : ");
 
-        lecEmail2.setBackground(new java.awt.Color(255, 255, 255));
         lecEmail2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecEmail2.setForeground(new java.awt.Color(0, 0, 0));
         lecEmail2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         lecEmail2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -883,9 +880,7 @@ public class admin extends javax.swing.JFrame {
         jLabel55.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel55.setText("Password :");
 
-        lecUsername2.setBackground(new java.awt.Color(255, 255, 255));
         lecUsername2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecUsername2.setForeground(new java.awt.Color(0, 0, 0));
         lecUsername2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel56.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -894,9 +889,7 @@ public class admin extends javax.swing.JFrame {
         jLabel57.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel57.setText("Contact No :");
 
-        lecContact2.setBackground(new java.awt.Color(255, 255, 255));
         lecContact2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecContact2.setForeground(new java.awt.Color(0, 0, 0));
         lecContact2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         lecContact2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -907,9 +900,7 @@ public class admin extends javax.swing.JFrame {
         jLabel58.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel58.setText("Designation :");
 
-        lecDesignation2.setBackground(new java.awt.Color(255, 255, 255));
         lecDesignation2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        lecDesignation2.setForeground(new java.awt.Color(0, 0, 0));
         lecDesignation2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Head of School", "Senior", "Junior", "Part Time" }));
         lecDesignation2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         lecDesignation2.addActionListener(new java.awt.event.ActionListener() {
@@ -971,9 +962,7 @@ public class admin extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(lecTable2);
 
-        lecPassword2.setBackground(new java.awt.Color(255, 255, 255));
         lecPassword2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        lecPassword2.setForeground(new java.awt.Color(0, 0, 0));
         lecPassword2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         lecPassword2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -981,9 +970,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        tfLecSearch.setBackground(new java.awt.Color(255, 255, 255));
         tfLecSearch.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        tfLecSearch.setForeground(new java.awt.Color(0, 0, 0));
         tfLecSearch.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         tfLecSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1192,9 +1179,7 @@ public class admin extends javax.swing.JFrame {
         jLabel42.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel42.setText("Email Address : ");
 
-        stdEmail.setBackground(new java.awt.Color(255, 255, 255));
         stdEmail.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdEmail.setForeground(new java.awt.Color(0, 0, 0));
         stdEmail.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         stdEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1205,9 +1190,7 @@ public class admin extends javax.swing.JFrame {
         jLabel43.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel43.setText("Password :");
 
-        stdUsername.setBackground(new java.awt.Color(255, 255, 255));
         stdUsername.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdUsername.setForeground(new java.awt.Color(0, 0, 0));
         stdUsername.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel44.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -1216,17 +1199,13 @@ public class admin extends javax.swing.JFrame {
         jLabel45.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel45.setText("Contact No :");
 
-        stdContact.setBackground(new java.awt.Color(255, 255, 255));
         stdContact.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdContact.setForeground(new java.awt.Color(0, 0, 0));
         stdContact.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel46.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel46.setText("Course :");
 
-        stdCourse.setBackground(new java.awt.Color(255, 255, 255));
         stdCourse.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        stdCourse.setForeground(new java.awt.Color(0, 0, 0));
         stdCourse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Software Engineering", "Data Analysis", "Multimedia", "Artificial Inteligence", "Fintech" }));
         stdCourse.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         stdCourse.addActionListener(new java.awt.event.ActionListener() {
@@ -1257,8 +1236,6 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        stdPassword.setBackground(new java.awt.Color(255, 255, 255));
-        stdPassword.setForeground(new java.awt.Color(0, 0, 0));
         stdPassword.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel48.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -1419,9 +1396,7 @@ public class admin extends javax.swing.JFrame {
         jLabel71.setText("Manage Student :");
         header6.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 5, -1, -1));
 
-        stdContact2.setBackground(new java.awt.Color(255, 255, 255));
         stdContact2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdContact2.setForeground(new java.awt.Color(0, 0, 0));
         stdContact2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         stdContact2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1463,9 +1438,7 @@ public class admin extends javax.swing.JFrame {
         jLabel69.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel69.setText("Course :");
 
-        stdCourse2.setBackground(new java.awt.Color(255, 255, 255));
         stdCourse2.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
-        stdCourse2.setForeground(new java.awt.Color(0, 0, 0));
         stdCourse2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Software Engineering", "Data Analysis", "Multimedia", "Aritificial Inteligence", "Fintech" }));
         stdCourse2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 2, 1, new java.awt.Color(153, 153, 153)));
         stdCourse2.addActionListener(new java.awt.event.ActionListener() {
@@ -1496,9 +1469,7 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        stdPassword2.setBackground(new java.awt.Color(255, 255, 255));
         stdPassword2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdPassword2.setForeground(new java.awt.Color(0, 0, 0));
         stdPassword2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         stdPassword2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1509,9 +1480,7 @@ public class admin extends javax.swing.JFrame {
         jLabel70.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel70.setText("Email Address : ");
 
-        stdEmail2.setBackground(new java.awt.Color(255, 255, 255));
         stdEmail2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdEmail2.setForeground(new java.awt.Color(0, 0, 0));
         stdEmail2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
         stdEmail2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1522,9 +1491,7 @@ public class admin extends javax.swing.JFrame {
         jLabel78.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
         jLabel78.setText("Password :");
 
-        stdUsername2.setBackground(new java.awt.Color(255, 255, 255));
         stdUsername2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
-        stdUsername2.setForeground(new java.awt.Color(0, 0, 0));
         stdUsername2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(153, 153, 153)));
 
         jLabel79.setFont(new java.awt.Font("Cambria", 1, 14)); // NOI18N
@@ -1746,22 +1713,18 @@ public class admin extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 3, 2, new java.awt.Color(153, 153, 153)));
 
         jLabel32.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(0, 0, 0));
         jLabel32.setText("Name :");
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel33.setForeground(new java.awt.Color(0, 0, 0));
         jLabel33.setText("Email Address:");
 
         jLabel34.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel34.setForeground(new java.awt.Color(0, 0, 0));
         jLabel34.setText("Phone Number :");
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
         email.setBackground(new java.awt.Color(255, 255, 255));
         email.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        email.setForeground(new java.awt.Color(0, 0, 0));
         email.setText("jLabel33");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -1785,7 +1748,6 @@ public class admin extends javax.swing.JFrame {
 
         username.setBackground(new java.awt.Color(255, 255, 255));
         username.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        username.setForeground(new java.awt.Color(0, 0, 0));
         username.setText("jLabel33");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1809,7 +1771,6 @@ public class admin extends javax.swing.JFrame {
 
         phone.setBackground(new java.awt.Color(255, 255, 255));
         phone.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        phone.setForeground(new java.awt.Color(0, 0, 0));
         phone.setText("jLabel35");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -2773,7 +2734,7 @@ public class admin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new admin().setVisible(true);
+                new admin("Name").setVisible(true);
             }
         });
     }
@@ -2783,7 +2744,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel addPM;
     private javax.swing.JPanel addStudent;
     private javax.swing.JLabel adminDesignation;
-    private javax.swing.JLabel adminUsername;
     private javax.swing.JButton backB;
     private javax.swing.JButton backB1;
     private javax.swing.JButton backB2;
@@ -2885,6 +2845,7 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField lecContact;
     private javax.swing.JTextField lecContact2;
     private javax.swing.JComboBox<String> lecDesignation;
