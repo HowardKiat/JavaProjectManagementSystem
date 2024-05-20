@@ -41,7 +41,7 @@ public class login extends javax.swing.JFrame {
     
     public void removePlaceholder(JTextField textField){
     Font font  = textField.getFont();
-    font = font.deriveFont (font. PLAIN |font.BOLD);
+    font = font.deriveFont (Font. PLAIN |Font.BOLD);
     textField.setFont(font);
     textField.setForeground(Color. black);
     }
@@ -335,6 +335,7 @@ public class login extends javax.swing.JFrame {
     String enteredUsername = email.getText();
     String enteredPassword = password.getText();
 
+
     // Validate credentials based on the selected role
     switch (role) {
         case "admin":
@@ -354,10 +355,11 @@ public class login extends javax.swing.JFrame {
 
   
 
-private void validateCredentials(String role, String enteredUsername, String enteredPassword) {
+ private void validateCredentials(String role, String enteredUsername, String enteredPassword) {
     boolean validCredentials = false;
+    String filename;
+    String name = "Name"; // Initialize the name variable
 
-    String filename; // Variable to hold the filename based on role
     switch (role) {
         case "admin":
             filename = "admin.txt";
@@ -370,22 +372,32 @@ private void validateCredentials(String role, String enteredUsername, String ent
             break;
         default:
             JOptionPane.showMessageDialog(null, "Invalid role selected", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // Exit the method if an invalid role is selected
+            return;
     }
 
-try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
         String line;
         while ((line = reader.readLine()) != null) {
             String[] userData = line.split(",");
-            if (userData.length >= 2) {
+            if (role.equals("student") && userData.length >= 4) {
                 String fileUsername = userData[0];
                 String filePassword = userData[1];
-
                 if (enteredUsername.equals(fileUsername) && enteredPassword.equals(filePassword)) {
+                    name = userData[3]; // Name is at index 3 for students
                     validCredentials = true;
                     JOptionPane.showMessageDialog(null, "Login successful as " + role);
-                    // Open the corresponding role frame or perform role-specific actions
-                    openRoleFrame(role);
+                    openRoleFrame(role, name); // Pass the name
+                    dispose(); // Close the login frame
+                    break;
+                }
+            } else if ((role.equals("admin") || role.equals("lecturer")) && userData.length >= 3) {
+                String fileUsername = userData[0];
+                String filePassword = userData[1];
+                if (enteredUsername.equals(fileUsername) && enteredPassword.equals(filePassword)) {
+                    name = userData[2]; // Name is at index 2 for admin and lecturer
+                    validCredentials = true;
+                    JOptionPane.showMessageDialog(null, "Login successful as " + role);
+                    openRoleFrame(role, name); // Pass the name
                     dispose(); // Close the login frame
                     break;
                 }
@@ -398,24 +410,26 @@ try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
     if (!validCredentials) {
         JOptionPane.showMessageDialog(null, "Invalid username or password", "Error", JOptionPane.ERROR_MESSAGE);
     }
-
 }
-private void openRoleFrame(String role) {
-    // Perform actions based on the role parameter
-    switch (role) {
-        case "admin":
-            new admin().setVisible(true);
-            break;
-        case "lecturer":
-            new lecturer().setVisible(true);
-            break;
-        case "student":
-            new student().setVisible(true);
-            break;
-        default:
-            JOptionPane.showMessageDialog(null, "Invalid role selected", "Error", JOptionPane.ERROR_MESSAGE);
-            break;
-    }
+
+
+    private void openRoleFrame(String role, String name) {
+        switch (role) {
+            case "admin":
+                new admin(name).setVisible(true);
+                break;
+            case "lecturer":
+                new lecturer(name).setVisible(true);
+                break;
+            case "student":
+                new student(name).setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Invalid role selected", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
+        }
+    
+
 
 
        
