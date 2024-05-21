@@ -4,7 +4,7 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.student;
+import com.mycompany.javaprojectmanagementsystem.Student;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,6 +24,10 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class presentationRequestPage extends javax.swing.JFrame {
+
+    public presentationRequestPage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private class PresentationRequest {
         private final String name;
         private final String id;
@@ -61,6 +65,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
 }
     /**
      * Creates new form requestPresentation
+     * @param name
      */
     public presentationRequestPage(String name) {
         initComponents();
@@ -359,7 +364,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new student("Name").setVisible(true);
+        new Student("Name").setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

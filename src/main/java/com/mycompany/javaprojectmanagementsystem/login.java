@@ -5,7 +5,7 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import com.mycompany.javaprojectmanagementsystem.admin;
-import com.mycompany.javaprojectmanagementsystem.student;
+import com.mycompany.javaprojectmanagementsystem.Student;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -422,7 +422,7 @@ public class login extends javax.swing.JFrame {
                 new lecturer(name).setVisible(true);
                 break;
             case "student":
-                new student(name).setVisible(true);
+                new Student(name).setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Invalid role selected", "Error", JOptionPane.ERROR_MESSAGE);
@@ -437,8 +437,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-                if(jCheckBox1.isSelected()){
+        if(jCheckBox1.isSelected()){
             password.setEchoChar((char)0);
         }
         else {
