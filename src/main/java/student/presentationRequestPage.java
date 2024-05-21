@@ -4,7 +4,7 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.Student;
+import com.mycompany.javaprojectmanagementsystem.student;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -364,7 +364,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Student("Name").setVisible(true);
+        new student("Name").setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
