@@ -20,13 +20,16 @@ import java.util.ArrayList;
  * @author User
  */
 public class PresentationManager extends javax.swing.JFrame {
+    private final String lecturerName;
     private final String filePath = "presentation_request.txt";
 
     /**
      * Creates new form managePresentation
+     * @param name
      */
     public PresentationManager(String name) {
         super(); 
+        this.lecturerName = name;
         initComponents();
         setSize(1200, 700);
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -109,7 +112,7 @@ public class PresentationManager extends javax.swing.JFrame {
         LecturerTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
         acceptBtn = new javax.swing.JButton();
         rejectBtn = new javax.swing.JButton();
         viewSlot = new javax.swing.JButton();
@@ -175,10 +178,10 @@ public class PresentationManager extends javax.swing.JFrame {
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                backBtnActionPerformed(evt);
             }
         });
 
@@ -221,7 +224,7 @@ public class PresentationManager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(363, 363, 363)
-                        .addComponent(jButton1))
+                        .addComponent(backBtn))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(135, 135, 135)
                         .addComponent(acceptBtn)
@@ -243,17 +246,19 @@ public class PresentationManager extends javax.swing.JFrame {
                     .addComponent(rejectBtn)
                     .addComponent(viewSlot))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(backBtn)
                 .addGap(45, 45, 45))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        var sp = new lecturer(lecturerName);
+        sp.setVisible(true);
+        dispose();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_backBtnActionPerformed
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
         int selectedRow = jTable1.getSelectedRow();
@@ -344,7 +349,7 @@ public class PresentationManager extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField LecturerTextField1;
     private javax.swing.JButton acceptBtn;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton backBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

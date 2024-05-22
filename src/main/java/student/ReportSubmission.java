@@ -4,6 +4,7 @@
  */
 package student;
 
+import com.mycompany.javaprojectmanagementsystem.student;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import javax.imageio.ImageIO;
@@ -61,15 +62,10 @@ public class ReportSubmission extends javax.swing.JFrame {
     private void initComponents() {
 
         pDDocument1 = new org.apache.pdfbox.pdmodel.PDDocument();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         uploadBtn = new javax.swing.JButton();
         dateField = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -81,78 +77,45 @@ public class ReportSubmission extends javax.swing.JFrame {
         nextBtn = new javax.swing.JButton();
         pageNum = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        pdfDisplayLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         profileField = new javax.swing.JTextField();
+        pdfDisplayLabel = new javax.swing.JLabel();
+        backBtn = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel1.setText("Upcoming Submissions");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 200, 230));
-
+        uploadBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         uploadBtn.setText("Upload File");
         uploadBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(uploadBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 680, -1, -1));
-        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 110, 20));
+        getContentPane().add(uploadBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 640, 130, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 110, -1));
+        dateField.setText("auto reads submission date");
+        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 360, 160, 20));
 
         jLabel2.setText("Date");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 40, 20));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 40, 20));
 
         jLabel3.setText("Assesment Type");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, 20));
-
-        jLabel6.setText("PROFILE ICON");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, -1, 20));
 
         jLabel7.setText("Intake");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, -1, -1));
 
         jLabel4.setText("Course");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 50, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 50, -1));
 
-        jTextField1.setText("jTextField1");
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 110, -1));
+        jTextField1.setText("get from txt file");
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 110, -1));
 
         jLabel8.setText("Modules");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -161,7 +124,7 @@ public class ReportSubmission extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jList1);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, -1, -1));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 70, -1));
 
         assessmentTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         assessmentTypeField.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +132,7 @@ public class ReportSubmission extends javax.swing.JFrame {
                 assessmentTypeFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(assessmentTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 110, -1));
+        getContentPane().add(assessmentTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 110, -1));
 
         prevBtn.setText("<");
         prevBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -177,7 +140,7 @@ public class ReportSubmission extends javax.swing.JFrame {
                 prevBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(prevBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 670, -1, -1));
+        getContentPane().add(prevBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, -1, -1));
 
         nextBtn.setText(">");
         nextBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -185,27 +148,60 @@ public class ReportSubmission extends javax.swing.JFrame {
                 nextBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(nextBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 670, -1, -1));
-        getContentPane().add(pageNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 670, 90, 30));
+        getContentPane().add(nextBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 640, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(102, 255, 102));
+        pageNum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pageNum.setText(".");
+        getContentPane().add(pageNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 640, 90, 30));
+
+        jPanel2.setBackground(new java.awt.Color(255, 102, 102));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setText("Submission Manager");
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-icon.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1150, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(114, 114, 114)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(profileField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(553, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(46, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(profileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
 
-        pdfDisplayLabel.setText("jLabel5");
-        getContentPane().add(pdfDisplayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 360, 420));
-        getContentPane().add(profileField, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, -1, -1));
+        pdfDisplayLabel.setText(".");
+        pdfDisplayLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        getContentPane().add(pdfDisplayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 440, 500));
+
+        backBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(backBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 730, -1, -1));
+
+        jTextField2.setText("get from txt file");
+        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -229,10 +225,6 @@ public class ReportSubmission extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_uploadBtnActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void assessmentTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentTypeFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_assessmentTypeFieldActionPerformed
@@ -250,6 +242,12 @@ public class ReportSubmission extends javax.swing.JFrame {
             displayPdfPage(currentPageIndex);
         }
     }//GEN-LAST:event_prevBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        var sp = new student(studentName);
+        sp.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
     
     
     private void openPdf(File pdfFile) { 
@@ -360,21 +358,20 @@ public class ReportSubmission extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> assessmentTypeField;
+    private javax.swing.JButton backBtn;
     private javax.swing.JTextField dateField;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JButton nextBtn;
     private org.apache.pdfbox.pdmodel.PDDocument pDDocument1;
     private javax.swing.JLabel pageNum;
