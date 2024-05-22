@@ -1,28 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package student;
 
 /**
- *
- * @author User
+ * A class representing a submission by a student.
  */
 public class Submission {
-//    see if want to have moodle Link
     private String date;
-    private String assessmentType;
-    private String moodleLink;
-    private final String fileName;
-    
-    public Submission(String date, String assessmentType, String moodleLink, String fileName) {
+    private String fileName;
+    private String studentName;
+
+    public Submission(String date, String fileName, String studentName) {
         this.date = date;
-        this.assessmentType = assessmentType;
-        this.moodleLink = moodleLink;
         this.fileName = fileName;
+        this.studentName = studentName;
     }
-    
-    
+
     public String getDate() {
         return date;
     }
@@ -31,30 +22,24 @@ public class Submission {
         this.date = date;
     }
 
-    public String getAssessmentType() {
-        return assessmentType;
-    }
-
-    public void setAssessmentType(String assessmentType) {
-        this.assessmentType = assessmentType;
-    }
-
-    public String getMoodleLink() {
-        return moodleLink;
-    }
-
-    public void setMoodleLink(String moodleLink) {
-        this.moodleLink = moodleLink;
-    }
-
     public String getFileName() {
         return fileName;
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
     @Override
     public String toString() {
-        return fileName + date;
-        
-//        record student name too
+        return date + " - " + fileName + " - " + studentName;
     }
 }

@@ -9,12 +9,17 @@ package student;
  * @author User
  */
 public class ReportDashboard extends javax.swing.JFrame {
-
+    private final String studentName;
     /**
      * Creates new form SubmitReport
+     * @param name
      */
-    public ReportDashboard() {
+    public ReportDashboard(String name) {
+        this.studentName = name;
         initComponents();
+        profileField.setText(studentName);
+        profileField.setEditable(false); 
+
     }
 
     /**
@@ -27,27 +32,42 @@ public class ReportDashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        profileField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
         CheckProgress = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-icon.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(395, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(profileField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(303, 303, 303))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(profileField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 817, 80));
@@ -73,7 +93,7 @@ public class ReportDashboard extends javax.swing.JFrame {
                 .addGap(40, 40, 40))
         );
 
-        getContentPane().add(CheckProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 100, 190, 60));
+        getContentPane().add(CheckProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, 190, 60));
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -128,11 +148,14 @@ public class ReportDashboard extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 580, 240));
 
+        jButton1.setText("Back");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 440, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        new ReportSubmission().setVisible(true);
+        new ReportSubmission(studentName).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel1MouseClicked
 
@@ -167,18 +190,21 @@ public class ReportDashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReportDashboard().setVisible(true);
+                new ReportDashboard("Name").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel CheckProgress;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField profileField;
     // End of variables declaration//GEN-END:variables
 }

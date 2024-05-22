@@ -4,7 +4,7 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.Student;
+import com.mycompany.javaprojectmanagementsystem.student;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,10 +24,8 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class presentationRequestPage extends javax.swing.JFrame {
-
-    public presentationRequestPage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    private final String studentName;
+    
     private class PresentationRequest {
         private final String name;
         private final String id;
@@ -65,9 +63,10 @@ public class presentationRequestPage extends javax.swing.JFrame {
 }
     /**
      * Creates new form requestPresentation
-     * @param name
+     * @param studentName
      */
-    public presentationRequestPage(String name) {
+    public presentationRequestPage(String studentName) {
+        this.studentName = studentName;
         initComponents();
         setSize(950, 700);
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -77,9 +76,35 @@ public class presentationRequestPage extends javax.swing.JFrame {
         statusField.setText("Pending");
         statusField.setEditable(false);
         appendLecturers();
-        studentTextField1.setText(name);
-        studentTextField1.setEditable(false); // Make the text field non-editable    
+        studentTextField1.setText(studentName);
+        studentTextField1.setEditable(false);
+        loadStudentData(studentName);
+    }
     
+    private void loadStudentData(String name) {
+        try (BufferedReader br = new BufferedReader(new FileReader("presentation_request.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 6 && parts[3].equals(name)) {
+                    emailField.setText(parts[0]);
+                    idField.setText(parts[1]);
+                    intakeField.setText(parts[2]);
+                    nameField.setText(parts[3]);
+                    topicField.setText(parts[5]);
+                    // Assuming parts[6] contains some date format you need to parse
+                    // jDateChooser1.setDate(...); // You need to parse parts[6] to a Date object
+                    emailField.setEditable(false);
+                    idField.setEditable(false);
+                    intakeField.setEditable(false);
+                    nameField.setEditable(false);
+                    topicField.setEditable(false);
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private void sendRequest() {
@@ -364,8 +389,9 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new Student("Name").setVisible(true);
-        this.dispose();
+        var sp = new student(studentName);
+        sp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -399,7 +425,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new presentationRequestPage("").setVisible(true);
+                new presentationRequestPage("Name").setVisible(true);
             }
         });
     }

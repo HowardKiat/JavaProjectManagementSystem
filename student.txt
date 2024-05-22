@@ -1,6 +1,5 @@
 weihao@gmail.com,asd,TP362687,wei hao,123124124,Software Engineering,5-2024,
 itachi@gmail.com,asd,TP383395,itachiiii,41213190,Artificial Inteligence,8-2024,
-yizun,123,TP201346,Yizun,12000000,Software Engineering,5-2024,
-=======
-test,123,TP748663,test,12389239,Software Engineering,5-2024,
-
+yz@gmail.com,123,TP787777,Yizun,123456789,Software Engineering,6-2024,
+john@gmail.com,asd,TP397324,Johnny,1234567890,Multimedia,9-2024,
+jx@gmail.com,1234,TP827805,Jin Xun,1223344556,Artificial Inteligence,6-2024,

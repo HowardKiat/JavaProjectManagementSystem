@@ -9,7 +9,7 @@ import student.presentationRequestPage;
 
 /**
  *
- * @author Darren
+ * @author Howard
  */
 public class Student extends javax.swing.JFrame {
     private final String studentName;
@@ -198,7 +198,7 @@ public class Student extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        new ReportDashboard().setVisible(true);
+        new ReportDashboard(studentName).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel3MouseClicked
 

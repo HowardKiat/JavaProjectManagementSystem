@@ -23,23 +23,32 @@ import org.apache.pdfbox.Loader;
  * @author User
  */
 public class ReportSubmission extends javax.swing.JFrame {
-    
+    private final String studentName;
     private final List<Submission> submissions;
     private final DefaultListModel<String> listModel;
     private final JList<String> submissionList;
+    private PDDocument currentPdfDocument;
+    private int currentPageIndex;
+
     /**
      * Creates new form ManageReport
+     * @param name
      */
-    public ReportSubmission() {
+    public ReportSubmission(String name) {
+        super();
         submissions = new ArrayList<>();
         listModel = new DefaultListModel<>();
         submissionList = new JList<>(listModel);
 
         setTitle("Report Submission");
-        setSize(600, 400);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        
+        this.studentName = name;
         initComponents();
+        profileField.setText(studentName);
+        profileField.setEditable(false); 
     }
 
     /**
@@ -57,19 +66,23 @@ public class ReportSubmission extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         uploadBtn = new javax.swing.JButton();
         dateField = new javax.swing.JTextField();
-        assessmentTypeField = new javax.swing.JTextField();
-        moodleLinkField = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        editBtn = new javax.swing.JButton();
-        deleteBtn = new javax.swing.JButton();
-        statusBtn = new javax.swing.JButton();
-        pdfDisplayLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        assessmentTypeField = new javax.swing.JComboBox<>();
+        prevBtn = new javax.swing.JButton();
+        nextBtn = new javax.swing.JButton();
+        pageNum = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        pdfDisplayLabel = new javax.swing.JLabel();
+        profileField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -101,7 +114,7 @@ public class ReportSubmission extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 200, 230));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 500, 200, 230));
 
         uploadBtn.setText("Upload File");
         uploadBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -109,60 +122,90 @@ public class ReportSubmission extends javax.swing.JFrame {
                 uploadBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(uploadBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 570, -1, -1));
-        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 110, 20));
-        getContentPane().add(assessmentTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 110, 20));
-        getContentPane().add(moodleLinkField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 110, -1));
+        getContentPane().add(uploadBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 680, -1, -1));
+        getContentPane().add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 110, 20));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, -1, -1));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 110, -1));
 
         jLabel2.setText("Date");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 40, 10));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 40, 20));
 
         jLabel3.setText("Assesment Type");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, -1, 10));
-
-        jLabel4.setText("Moodle Link");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
-
-        jLabel5.setText("THE NAME");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, 20));
 
         jLabel6.setText("PROFILE ICON");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 50, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 170, -1, -1));
 
-        editBtn.setText("Edit");
-        editBtn.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setText("Intake");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 170, -1, -1));
+
+        jLabel4.setText("Course");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 50, -1));
+
+        jTextField1.setText("jTextField1");
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 110, -1));
+
+        jLabel8.setText("Modules");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, -1, -1));
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 310, -1, -1));
+
+        assessmentTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        assessmentTypeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBtnActionPerformed(evt);
+                assessmentTypeFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 570, -1, -1));
+        getContentPane().add(assessmentTypeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, 110, -1));
 
-        deleteBtn.setText("Delete");
-        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+        prevBtn.setText("<");
+        prevBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteBtnActionPerformed(evt);
+                prevBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(deleteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, -1, -1));
+        getContentPane().add(prevBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 670, -1, -1));
 
-        statusBtn.setText("Status");
-        statusBtn.addActionListener(new java.awt.event.ActionListener() {
+        nextBtn.setText(">");
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                statusBtnActionPerformed(evt);
+                nextBtnActionPerformed(evt);
             }
         });
-        getContentPane().add(statusBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 570, -1, -1));
+        getContentPane().add(nextBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 670, -1, -1));
+        getContentPane().add(pageNum, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 670, 90, 30));
 
-        pdfDisplayLabel.setBackground(new java.awt.Color(204, 204, 255));
-        pdfDisplayLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pdfDisplayLabel.setText("PDF display");
-        getContentPane().add(pdfDisplayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 580, 410));
+        jPanel2.setBackground(new java.awt.Color(102, 255, 102));
 
-        jLabel7.setText("Courses(if we have)");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1150, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, -1));
+
+        pdfDisplayLabel.setText("jLabel5");
+        getContentPane().add(pdfDisplayLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 360, 420));
+        getContentPane().add(profileField, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -170,7 +213,7 @@ public class ReportSubmission extends javax.swing.JFrame {
     private void uploadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadBtnActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select a PDF file");
-        int userSelection = fileChooser.showOpenDialog(null);
+        int userSelection = fileChooser.showOpenDialog(this);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File pdfFile = fileChooser.getSelectedFile();
@@ -181,72 +224,98 @@ public class ReportSubmission extends javax.swing.JFrame {
 
             int confirmation = JOptionPane.showConfirmDialog(this, "Do you want to upload this PDF?", "Confirm Upload", JOptionPane.YES_NO_OPTION);
             if (confirmation == JOptionPane.YES_OPTION) {
-                checkPdf(pdfFile);
+                openPdf(pdfFile);
             }
         }
     }//GEN-LAST:event_uploadBtnActionPerformed
 
-    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        int selectedIndex = submissionList.getSelectedIndex();
-        if (selectedIndex != -1) {
-            Submission submission = submissions.get(selectedIndex);
-            submission.setDate(dateField.getText());
-            submission.setAssessmentType(assessmentTypeField.getText());
-            submission.setMoodleLink(moodleLinkField.getText());
-            listModel.set(selectedIndex, submission.toString());
-        }
-    }//GEN-LAST:event_editBtnActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
-        int selectedIndex = submissionList.getSelectedIndex();
-        if (selectedIndex != -1) {
-            submissions.remove(selectedIndex);
-            listModel.remove(selectedIndex);
-        }
-    }//GEN-LAST:event_deleteBtnActionPerformed
+    private void assessmentTypeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assessmentTypeFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_assessmentTypeFieldActionPerformed
 
-    private void statusBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusBtnActionPerformed
-        int selectedIndex = submissionList.getSelectedIndex();
-        if (selectedIndex != -1) {
-            Submission submission = submissions.get(selectedIndex);
-            JOptionPane.showMessageDialog(this, """
-                                                Submission Details:
-                                                Date: """ + submission.getDate() + "\n" +
-                    "Assessment Type: " + submission.getAssessmentType() + "\n" +
-                    "Moodle Link: " + submission.getMoodleLink() + "\n" +
-                    "File Name: " + submission.getFileName());
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        if (currentPdfDocument != null && currentPageIndex < currentPdfDocument.getNumberOfPages() - 1) {
+            currentPageIndex++;
+            displayPdfPage(currentPageIndex);
         }
-    }//GEN-LAST:event_statusBtnActionPerformed
+    }//GEN-LAST:event_nextBtnActionPerformed
+
+    private void prevBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevBtnActionPerformed
+        if (currentPdfDocument != null && currentPageIndex > 0) {
+            currentPageIndex--;
+            displayPdfPage(currentPageIndex);
+        }
+    }//GEN-LAST:event_prevBtnActionPerformed
     
     
-    private void checkPdf(File pdfFile) {
-        try (PDDocument pdfDocument = Loader.loadPDF(pdfFile)) {
-            PDFRenderer pdfRenderer = new PDFRenderer(pdfDocument);
+    private void openPdf(File pdfFile) { 
+        try {
+            currentPdfDocument = Loader.loadPDF(pdfFile);
+            currentPageIndex = 0;
+            displayPdfPage(currentPageIndex);
 
-            BufferedImage image = pdfRenderer.renderImageWithDPI(0, 300);
-            Image scaledImage = image.getScaledInstance(pdfDisplayLabel.getWidth(), pdfDisplayLabel.getHeight(), Image.SCALE_SMOOTH);
-            pdfDisplayLabel.setIcon(new ImageIcon(scaledImage));
-
-            Submission submission = new Submission(
-                    dateField.getText().isEmpty() ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : dateField.getText(),
-                    assessmentTypeField.getText().isEmpty() ? "Unknown" : assessmentTypeField.getText(),
-                    moodleLinkField.getText().isEmpty() ? "N/A" : moodleLinkField.getText(),
-                    pdfFile.getName()
+            int confirmation = JOptionPane.showConfirmDialog(
+                    this,
+                    "Do you want to upload and save this file?",
+                    "Confirm Upload",
+                    JOptionPane.YES_NO_OPTION
             );
-            submissions.add(submission);
-            listModel.addElement(submission.toString());
 
-            saveSubmissionToFile(submission);
+            if (confirmation == JOptionPane.YES_OPTION) {
+                saveSubmission(pdfFile);
+            } else {
+                currentPdfDocument.close();
+                currentPdfDocument = null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
+    private void displayPdfPage(int pageIndex) {
+        try {
+            PDFRenderer renderer = new PDFRenderer(currentPdfDocument);
+            BufferedImage image = renderer.renderImageWithDPI(pageIndex, 72);
+            ImageIcon icon = new ImageIcon(getScaledImage(image, pdfDisplayLabel.getWidth(), pdfDisplayLabel.getHeight()));
+            pdfDisplayLabel.setIcon(icon);
+            pageNum.setText("Page " + (pageIndex + 1) + " of " + currentPdfDocument.getNumberOfPages());
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error displaying PDF page: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private Image getScaledImage(BufferedImage srcImg, int w, int h) {
+        Image scaledImg = srcImg.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = img.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2d.drawImage(scaledImg, 0, 0, null);
+        g2d.dispose();
+
+        return img;
+    }
+    
+    private void saveSubmission(File pdfFile) {
+        Submission submission = new Submission(
+                new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                pdfFile.getName(),
+                 studentName
+        );
+        submissions.add(submission);
+        listModel.addElement(submission.toString());
+        saveSubmissionToFile(submission);
+    }
+    
     private void saveSubmissionToFile(Submission submission) {
         try (FileWriter writer = new FileWriter("submissions.txt", true)) {
-            writer.write(submission.toString() + "\n");
-            writer.flush();
+            writer.write(String.format("%s, %s, %s%n", submission.getDate(), submission.getFileName(), submission.getStudentName()));
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error saving submission: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -284,30 +353,34 @@ public class ReportSubmission extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReportSubmission().setVisible(true);
+                new ReportSubmission("Name").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField assessmentTypeField;
+    private javax.swing.JComboBox<String> assessmentTypeField;
     private javax.swing.JTextField dateField;
-    private javax.swing.JButton deleteBtn;
-    private javax.swing.JButton editBtn;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField moodleLinkField;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton nextBtn;
     private org.apache.pdfbox.pdmodel.PDDocument pDDocument1;
+    private javax.swing.JLabel pageNum;
     private javax.swing.JLabel pdfDisplayLabel;
-    private javax.swing.JButton statusBtn;
+    private javax.swing.JButton prevBtn;
+    private javax.swing.JTextField profileField;
     private javax.swing.JButton uploadBtn;
     // End of variables declaration//GEN-END:variables
 }
