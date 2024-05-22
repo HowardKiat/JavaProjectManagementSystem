@@ -57,27 +57,28 @@ public class PresentationManager extends javax.swing.JFrame {
         });  
         
         for (Presentation presentation : presentations) {
+            if (lecturerName.equalsIgnoreCase(presentation.getSupervisor())) {
             // Convert java.util.Date to LocalDate
-            LocalDate date = presentation.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            // Format the LocalDate object
-            String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                LocalDate date = presentation.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                // Format the LocalDate object
+                String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-            // Add the formatted date to the table model
-            model.addRow(new Object[]{
-                presentation.getStudentID(), presentation.getName(), presentation.getEmail(), 
-                presentation.getIntake(), presentation.getTopic(), formattedDate, 
-                presentation.getStartTime(), presentation.getEndTime(), presentation.getReason(),
-                presentation.getSupervisor(), presentation.getStatus()
-            });
+                // Add the formatted date to the table model
+                model.addRow(new Object[]{
+                    presentation.getStudentID(), presentation.getName(), presentation.getEmail(), 
+                    presentation.getIntake(), presentation.getTopic(), formattedDate, 
+                    presentation.getStartTime(), presentation.getEndTime(), presentation.getReason(),
+                    presentation.getSupervisor(), presentation.getStatus()
+                });
+            }
         }
     }
-    
         private void displayAcceptedPresentations() {
-        ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
-        DefaultTableModel model = new DefaultTableModel();
-        JTable acceptedTable = new JTable(model);
-        model.setColumnIdentifiers(new String[]{
-            "Date", "Start Time", "End Time", "Student ID", "Name", "Topic"
+            ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
+            DefaultTableModel model = new DefaultTableModel();
+            JTable acceptedTable = new JTable(model);
+            model.setColumnIdentifiers(new String[]{
+                "Student ID", "Name", "Date", "Start Time", "End Time", "Topic", "Supervisor"
         });
 
         for (Presentation presentation : presentations) {
@@ -85,8 +86,9 @@ public class PresentationManager extends javax.swing.JFrame {
                 LocalDate date = presentation.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                 String formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 model.addRow(new Object[]{
-                    formattedDate, presentation.getStartTime(), presentation.getEndTime(),
-                    presentation.getStudentID(), presentation.getName(), presentation.getTopic()
+                    presentation.getStudentID(), presentation.getName(), formattedDate, 
+                    presentation.getStartTime(), presentation.getEndTime(), presentation.getTopic(),
+                    presentation.getSupervisor()
                 });
             }
         }

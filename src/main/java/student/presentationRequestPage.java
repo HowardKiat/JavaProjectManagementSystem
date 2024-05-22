@@ -4,7 +4,9 @@
  */
 package student;
 
+import com.mycompany.javaprojectmanagementsystem.Presentation;
 import com.mycompany.javaprojectmanagementsystem.student;
+import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,7 +18,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 //import com.mycompany.javaprojectmanagementsystem;
 
 /**
@@ -88,17 +94,14 @@ public class presentationRequestPage extends javax.swing.JFrame {
                 String[] parts = line.split(",");
                 if (parts.length >= 6 && parts[3].equals(name)) {
                     emailField.setText(parts[0]);
-                    idField.setText(parts[1]);
-                    intakeField.setText(parts[2]);
+                    idField.setText(parts[2]);
+                    intakeField.setText(parts[6]);
                     nameField.setText(parts[3]);
-                    topicField.setText(parts[5]);
-                    // Assuming parts[6] contains some date format you need to parse
-                    // jDateChooser1.setDate(...); // You need to parse parts[6] to a Date object
+                    
                     emailField.setEditable(false);
                     idField.setEditable(false);
                     intakeField.setEditable(false);
                     nameField.setEditable(false);
-                    topicField.setEditable(false);
                     break;
                 }
             }
@@ -153,9 +156,34 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }    
     
     private void displaySupervisorSchedule(String supervisor) {
-    // Implement this method to show the supervisor's schedule
-    // This could be a new window or a dialog displaying the schedule
-        JOptionPane.showMessageDialog(this, "Supervisor's schedule functionality is not yet implemented.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        // Read presentation data from a file
+        List<PresentationRequest> presentations = readExistingRequests();
+
+        // Create a table to display the schedule
+        DefaultTableModel model = new DefaultTableModel();
+        JTable table = new JTable(model);
+        model.setColumnIdentifiers(new String[]{
+            "Student Name", "Topic", "Date", "Start Time", "End Time", "Supervisor"
+        });
+
+        for (PresentationRequest presentation : presentations) {
+            if (("Accepted".equalsIgnoreCase(presentation.status) || "Pending".equalsIgnoreCase(presentation.status)) 
+                    && supervisor.equalsIgnoreCase(presentation.supervisee)) {
+                String formattedDate = presentation.presentationDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+                model.addRow(new Object[]{
+                    presentation.name, presentation.topic, formattedDate,
+                    presentation.startTime, presentation.endTime, presentation.supervisee
+                });
+            }
+        }
+
+        JFrame scheduleFrame = new JFrame("Supervisor's Schedule");
+        scheduleFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        scheduleFrame.setSize(800, 600);
+        scheduleFrame.add(new JScrollPane(table), BorderLayout.CENTER);
+        scheduleFrame.setLocationRelativeTo(null);
+        scheduleFrame.setVisible(true);
     }
 
     private boolean savePresentationRequest(PresentationRequest pr) {

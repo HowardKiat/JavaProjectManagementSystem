@@ -4,16 +4,20 @@
  */
 package lecturer;
 
+import com.mycompany.javaprojectmanagementsystem.lecturer;
+
 /**
  *
  * @author User
  */
 public class SuperviseeList extends javax.swing.JFrame {
-
+    private final String lecturerName;
     /**
      * Creates new form SuperviseeList
+     * @param name
      */
-    public SuperviseeList() {
+    public SuperviseeList(String name) {
+        this.lecturerName = name;
         initComponents();
         setSize(950, 700);
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -91,6 +95,11 @@ public class SuperviseeList extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Back");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -135,6 +144,12 @@ public class SuperviseeList extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        var sp = new lecturer(lecturerName);
+        sp.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -165,7 +180,7 @@ public class SuperviseeList extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SuperviseeList().setVisible(true);
+                new SuperviseeList("Name").setVisible(true);
             }
         });
     }
