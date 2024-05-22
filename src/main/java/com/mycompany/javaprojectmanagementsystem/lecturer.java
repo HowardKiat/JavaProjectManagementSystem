@@ -189,7 +189,7 @@ public class lecturer extends javax.swing.JFrame {
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 130, 220, 110));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 220, 110));
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 204));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -230,7 +230,7 @@ public class lecturer extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 220, 110));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 220, 110));
 
         jPanel4.setBackground(new java.awt.Color(0, 153, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -270,7 +270,7 @@ public class lecturer extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 220, 110));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, 220, 110));
 
         jPanel9.setBackground(new java.awt.Color(0, 153, 204));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -310,7 +310,7 @@ public class lecturer extends javax.swing.JFrame {
                 .addGap(15, 15, 15))
         );
 
-        getContentPane().add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 130, 220, 110));
+        getContentPane().add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, 220, 110));
 
         reportPanel.setBackground(new java.awt.Color(0, 204, 204));
         reportPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -350,7 +350,7 @@ public class lecturer extends javax.swing.JFrame {
                 .addGap(9, 9, 9))
         );
 
-        getContentPane().add(reportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 430, 220, -1));
+        getContentPane().add(reportPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 430, 220, -1));
 
         allotPanel.setBackground(new java.awt.Color(0, 204, 204));
         allotPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -383,14 +383,14 @@ public class lecturer extends javax.swing.JFrame {
         allotPanelLayout.setVerticalGroup(
             allotPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, allotPanelLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jLabel17)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel13)
                 .addGap(9, 9, 9))
         );
 
-        getContentPane().add(allotPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 220, -1));
+        getContentPane().add(allotPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 220, 110));
 
         markerPanel.setBackground(new java.awt.Color(0, 204, 204));
         markerPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
@@ -423,14 +423,14 @@ public class lecturer extends javax.swing.JFrame {
         markerPanelLayout.setVerticalGroup(
             markerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, markerPanelLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel18)
                 .addGap(9, 9, 9))
         );
 
-        getContentPane().add(markerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 220, -1));
+        getContentPane().add(markerPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 270, 220, 110));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
