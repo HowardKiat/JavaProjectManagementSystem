@@ -31,6 +31,7 @@ public class login extends javax.swing.JFrame {
         addPlaceholder(email);
         addPlaceholder(password);
     }
+
     
         public void addPlaceholder(JTextField textField){
         Font font  = textField.getFont();
