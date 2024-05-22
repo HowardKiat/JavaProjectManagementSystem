@@ -4,7 +4,7 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.student;
+import com.mycompany.javaprojectmanagementsystem.Student;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.rendering.PDFRenderer;
 import javax.imageio.ImageIO;
@@ -237,7 +237,7 @@ public class ReportSubmission extends javax.swing.JFrame {
     }//GEN-LAST:event_prevBtnActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        var sp = new student(studentName);
+        var sp = new Student(studentName);
         sp.setVisible(true);
         dispose();
     }//GEN-LAST:event_backBtnActionPerformed

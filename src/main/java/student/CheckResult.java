@@ -4,7 +4,7 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.student;
+import com.mycompany.javaprojectmanagementsystem.Student;
 
 /**
  *
@@ -155,7 +155,7 @@ public class CheckResult extends javax.swing.JFrame {
     }//GEN-LAST:event_profileFieldActionPerformed
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        var sp = new student(studentName);
+        var sp = new Student(studentName);
         sp.setVisible(true);
         dispose();
     }//GEN-LAST:event_backBtnActionPerformed
