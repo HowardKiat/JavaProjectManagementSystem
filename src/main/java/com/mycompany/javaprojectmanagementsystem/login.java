@@ -5,7 +5,7 @@
 package com.mycompany.javaprojectmanagementsystem;
 
 import com.mycompany.javaprojectmanagementsystem.admin;
-import com.mycompany.javaprojectmanagementsystem.Student;
+import com.mycompany.javaprojectmanagementsystem.student;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -423,7 +423,7 @@ public class login extends javax.swing.JFrame {
                 new lecturer(name).setVisible(true);
                 break;
             case "student":
-                new Student(name).setVisible(true);
+                new student(name).setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Invalid role selected", "Error", JOptionPane.ERROR_MESSAGE);
