@@ -1,5 +1,6 @@
 123,Howard ,howard@gmail.com,432,Hulk,19/05/2024,09:00am,13:00pm,hahahaha,Howard Tan,Accepted
 555,Darren,Dar123@gmail.com,666,Sushi,19/05/2024,09:00am,11:00am,DDd,Darren Chey1231,Accepted
-x,x,x,x,x,17/05/2024,09:00am,15:00pm,f,Howard Tan,Pending
+x,x,x,x,x,17/05/2024,09:00am,15:00pm,f,Howard Tan,Rejected
 123,Jason,jason@gmail.com,321,Spiderman,20/05/2024,09:00am,12:00pm,cscs,Darren Chey1231,Pending
 123,Fabian,jason@gmail.com,321,Spiderman,20/05/2024,09:00am,12:00pm,cscs,Howard Tan,Pending
+123,Yizun,yz@gmail.com,TP787777,Software Engineering,22/05/2024,11:00am,13:00pm,kkbbbb,Darren Chey1231,Pending

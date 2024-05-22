@@ -82,7 +82,7 @@ public class presentationRequestPage extends javax.swing.JFrame {
     }
     
     private void loadStudentData(String name) {
-        try (BufferedReader br = new BufferedReader(new FileReader("presentation_request.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("student.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");

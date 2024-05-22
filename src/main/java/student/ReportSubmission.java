@@ -70,8 +70,6 @@ public class ReportSubmission extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         assessmentTypeField = new javax.swing.JComboBox<>();
         prevBtn = new javax.swing.JButton();
         nextBtn = new javax.swing.JButton();
@@ -83,6 +81,7 @@ public class ReportSubmission extends javax.swing.JFrame {
         pdfDisplayLabel = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        jTextField3 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -114,17 +113,8 @@ public class ReportSubmission extends javax.swing.JFrame {
         jTextField1.setText("get from txt file");
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 110, -1));
 
-        jLabel8.setText("Modules");
+        jLabel8.setText("Project Name");
         getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, -1, -1));
-
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList1);
-
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 70, -1));
 
         assessmentTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         assessmentTypeField.addActionListener(new java.awt.event.ActionListener() {
@@ -202,6 +192,9 @@ public class ReportSubmission extends javax.swing.JFrame {
 
         jTextField2.setText("get from txt file");
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
+
+        jTextField3.setText("jTextField3");
+        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, 100, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -367,11 +360,10 @@ public class ReportSubmission extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JButton nextBtn;
     private org.apache.pdfbox.pdmodel.PDDocument pDDocument1;
     private javax.swing.JLabel pageNum;
