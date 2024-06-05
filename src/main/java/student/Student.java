@@ -2,11 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.javaprojectmanagementsystem;
+package student;
 
-import student.CheckResult;
-import student.ReportSubmission;
-import student.presentationRequestPage;
+import com.mycompany.javaprojectmanagementsystem.home;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 
 /**
  *
@@ -14,6 +19,7 @@ import student.presentationRequestPage;
  */
 public class Student extends javax.swing.JFrame {
     private final String studentName;
+    String filePath = "assessment_details.txt"; 
 
     /**
      * Creates new form Student
@@ -24,8 +30,28 @@ public class Student extends javax.swing.JFrame {
         initComponents();
         jTextField1.setText(studentName);
         jTextField1.setEditable(false); 
-
         
+        displayUpcomingSubmissions();
+    }
+    
+    private void displayUpcomingSubmissions() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel(); 
+        model.setRowCount(0); 
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] fields = line.split(", ");
+                if (fields.length >= 14) {
+                    model.addRow(new Object[]{fields[0], fields[1], fields[2], fields[13]});
+                } else {
+                    
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading file: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -199,17 +225,17 @@ public class Student extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Course", "Intake", "AssesmentType", "SubmissionDate", "Status"
+                "ProjectID", "ProjectName", "AssesmentType", "Course"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -267,7 +293,7 @@ public class Student extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void logoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutBtnActionPerformed
-        new login("").setVisible(true);
+        new home().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutBtnActionPerformed
 
@@ -290,6 +316,9 @@ public class Student extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Student.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
 
@@ -320,4 +349,6 @@ public class Student extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logoutBtn;
     // End of variables declaration//GEN-END:variables
+
+
 }

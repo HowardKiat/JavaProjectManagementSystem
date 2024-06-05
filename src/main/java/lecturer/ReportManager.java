@@ -4,18 +4,85 @@
  */
 package lecturer;
 
+import com.mycompany.javaprojectmanagementsystem.EvaluateReport;
+import com.mycompany.javaprojectmanagementsystem.Feedback;
+import com.mycompany.javaprojectmanagementsystem.Report;
+import java.awt.Desktop;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author User
  */
 public class ReportManager extends javax.swing.JFrame {
-
+    private final String lecturerName;
+    private final String filePath = "submitted_report.txt";
     /**
      * Creates new form ReportManager
      * @param name
      */
     public ReportManager(String name) {
+        super();
+        this.lecturerName = name;
         initComponents();
+        setSize(1081, 700);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
+        LecturerTextField1.setText(name);
+        LecturerTextField1.setEditable(false);
+        displayReportData();
+    }
+    
+    private void displayReportData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Clear existing rows
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", "); // Assuming your data is separated by commas and spaces
+
+                // Check if the parts array has enough elements
+                if (parts.length >= 12) {
+                    model.addRow(parts);
+                } else {
+                    // Handle invalid data format
+                    System.err.println("Invalid data format: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error reading file: " + e.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void saveReportData() {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    writer.write(model.getValueAt(i, j).toString());
+                    if (j < model.getColumnCount() - 1) {
+                        writer.write(", ");
+                    }
+                }
+                writer.write("\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error saving file: " + e.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -27,22 +94,322 @@ public class ReportManager extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        LecturerTextField1 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        editBtn = new javax.swing.JButton();
+        deleteReportBtn = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
+        addFeedbackBtn = new javax.swing.JButton();
+        editReportBtn = new javax.swing.JButton();
+        markStudentBtn = new javax.swing.JButton();
+        downloadSubmission = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 560, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("ReportManagement");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-icon.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 390, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(LecturerTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(225, 225, 225))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LecturerTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(20, 20, 20))
         );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1080, 80));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ProjectID", "ProjectName", "AssessmentType", "FileName", "StudentID", "StudentName", "Intake", "SubmittedTime", "SubmittedDate", "Course", "Grade", "Feedback", "MarkingStatus"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 1080, 300));
+
+        editBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/status-icon.png"))); // NOI18N
+        editBtn.setText("Edit Marking Status");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(editBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 190, 60));
+
+        deleteReportBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete-document-icon.png"))); // NOI18N
+        deleteReportBtn.setText("Delete Report");
+        deleteReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteReportBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(deleteReportBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 580, 190, 60));
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 102, 290, 30));
+
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 103, -1, 30));
+
+        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back-icon.png"))); // NOI18N
+        backBtn.setText("Back");
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(backBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 580, 170, 60));
+
+        addFeedbackBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/feedback-icon.png"))); // NOI18N
+        addFeedbackBtn.setText("Add Feedback");
+        addFeedbackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addFeedbackBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(addFeedbackBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 480, 190, 60));
+
+        editReportBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit1icon.png"))); // NOI18N
+        editReportBtn.setText("Edit Report");
+        editReportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editReportBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(editReportBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, 190, 60));
+
+        markStudentBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/marker-icon (1).png"))); // NOI18N
+        markStudentBtn.setText("Mark Student");
+        markStudentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                markStudentBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(markStudentBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 580, 190, 60));
+
+        downloadSubmission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/download-icon.png"))); // NOI18N
+        downloadSubmission.setText("Download & View");
+        downloadSubmission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                downloadSubmissionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(downloadSubmission, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 480, 190, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        var sp = new LecturerDashboard(lecturerName);
+        sp.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String search = searchField.getText().toLowerCase();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+
+        if (!search.isEmpty()) {
+            RowFilter<Object, Object> rowFilter = RowFilter.regexFilter("(?i)" + search);
+            sorter.setRowFilter(rowFilter);
+        } else {
+            sorter.setRowFilter(null); // Remove the filter if search text is empty
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        if (selectedRowIndex != -1) {
+            // Retrieve the data from the selected row
+            String[] rowData = new String[model.getColumnCount()];
+            for (int i = 0; i < model.getColumnCount(); i++) {
+                rowData[i] = model.getValueAt(selectedRowIndex, i).toString();
+            }
+
+            // Assuming the status column is at index 11 (adjust if needed)
+            String status = rowData[12];
+
+            if ("Pending".equals(status)) {
+                // Prompt the user to update the status
+                String newStatus = JOptionPane.showInputDialog(this, "Enter new status (e.g., Finished):");
+                if (newStatus != null && !newStatus.isEmpty()) {
+                    // Update the status in the model
+                    model.setValueAt(newStatus, selectedRowIndex, 12);
+                    saveReportData(); // Save changes to file
+                }
+            } else {
+                // Undo the status change
+                int choice = JOptionPane.showConfirmDialog(this, "Status is already marked as Finished. Undo the change?", "Undo Status", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    model.setValueAt("Pending", selectedRowIndex, 12);
+                    saveReportData(); // Save changes to file
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No row selected. Please select a row to edit.");
+        }
+    }//GEN-LAST:event_editBtnActionPerformed
+    
+ 
+    private void deleteReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteReportBtnActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this record?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.removeRow(selectedRow);
+                saveReportData();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row to delete.", "No Row Selected", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteReportBtnActionPerformed
+
+    private void addFeedbackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFeedbackBtnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int selectedRowIndex = jTable1.getSelectedRow();
+
+        if (selectedRowIndex != -1) {
+            // Assuming the feedback column is at index 10 (adjust if needed)
+            String newFeedback = JOptionPane.showInputDialog(this, "Enter new feedback:");
+            if (newFeedback != null && !newFeedback.isEmpty()) {
+                model.setValueAt(newFeedback, selectedRowIndex, 11);
+                saveReportData(); // Save changes to file
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No row selected. Please select a valid row to add feedback.");
+        }
+    }//GEN-LAST:event_addFeedbackBtnActionPerformed
+
+    private void editReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editReportBtnActionPerformed
+       int selectedRowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        if (selectedRowIndex != -1) {
+            EditReportDialog dialog = new EditReportDialog(this, model, selectedRowIndex);
+            dialog.setVisible(true);
+            saveReportData(); // Save changes to file
+        } else {
+            JOptionPane.showMessageDialog(this, "No row selected. Please select a row to edit.");
+        }
+    }//GEN-LAST:event_editReportBtnActionPerformed
+
+    private void downloadSubmissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downloadSubmissionActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Assuming student name is in column 6 (index 5) and file name is in column 4 (index 3)
+            String studentName = (String) jTable1.getValueAt(selectedRow, 5);
+            String fileName = (String) jTable1.getValueAt(selectedRow, 3);
+
+            if (studentName != null && !studentName.isEmpty() && fileName != null && !fileName.isEmpty()) {
+                // Construct the full filename
+                String fullFilename = studentName + "_" + fileName; 
+                File databaseFolder = new File(System.getProperty("user.dir") + File.separator + "database" + File.separator + studentName); 
+                File fileToDownload = new File(databaseFolder, fullFilename);
+
+                if (fileToDownload.exists() && fileToDownload.isFile()) {
+                    try {
+                        downloadPDF(fileToDownload);
+                        JOptionPane.showMessageDialog(this, "File downloaded successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException e) {
+                        JOptionPane.showMessageDialog(this, "Error downloading file: " + e.getMessage(), "Download Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "File not found in database folder.", "File Not Found", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Student name or file name is empty or invalid.", "Invalid Data", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row to download.", "No Row Selected", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_downloadSubmissionActionPerformed
+
+    private void markStudentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_markStudentBtnActionPerformed
+        int selectedRowIndex = jTable1.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        if (selectedRowIndex != -1) { 
+            String[] grades = {"A+", "A", "B+", "B", "C+", "C", "D", "F"};
+            String selectedGrade = (String) JOptionPane.showInputDialog(this, "Choose Grade", "Grade Selection", 
+                                            JOptionPane.QUESTION_MESSAGE, null, grades, grades[0]);
+
+            if (selectedGrade != null) { 
+                // Update the grade at index 10
+                model.setValueAt(selectedGrade, selectedRowIndex, 10);
+
+                model.setValueAt("Finished", selectedRowIndex, 12);
+
+                saveReportData(); 
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No row selected. Please select a row to edit.");
+        }
+    }//GEN-LAST:event_markStudentBtnActionPerformed
+
+    private void downloadPDF(File file) throws IOException {
+        try {
+            if (file.exists()) {
+                Desktop.getDesktop().open(file);
+            } else {
+                JOptionPane.showMessageDialog(this, "File not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e; 
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -79,5 +446,20 @@ public class ReportManager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField LecturerTextField1;
+    private javax.swing.JButton addFeedbackBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JButton deleteReportBtn;
+    private javax.swing.JButton downloadSubmission;
+    private javax.swing.JButton editBtn;
+    private javax.swing.JButton editReportBtn;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton markStudentBtn;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchField;
     // End of variables declaration//GEN-END:variables
 }

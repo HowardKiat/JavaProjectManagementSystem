@@ -5,7 +5,6 @@
 package student;
 
 import com.mycompany.javaprojectmanagementsystem.Presentation;
-import com.mycompany.javaprojectmanagementsystem.Student;
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.FileReader;

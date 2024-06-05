@@ -1,5 +1,5 @@
-jason@gmail.com,asd,Jason Lim,12313141,Head of School,Project Manager,
-howard@gmail.com,asd,Howard Tan,3412412,Head of School,none,
-darren@gmail.com,asd1231,Darren Chey1231,512412412,Head of School,none
-asd,asd,qwe,1234124,Head of School,nonewww,122,www,123,Head of School,none,
-123@gmail.com,123,www,123456,Head of School,Project Manager
+jason@gmail.com,asd,Jason Lim,0101111111,Head of School,Project Manager
+howard@gmail.com,asd,Howard Tan,0102222222,Junior,none,
+darren@gmail.com,asd,Darren Chey,0103333333,Junior,none
+john@gmail.com,123,John Doe,0104444444,Senior,none
+bob@gmail.com,123,Bob Ross,0105555555,Junior,none

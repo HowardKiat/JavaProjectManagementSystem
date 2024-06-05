@@ -4,8 +4,9 @@
  */
 package com.mycompany.javaprojectmanagementsystem;
 
+import lecturer.LecturerDashboard;
 import com.mycompany.javaprojectmanagementsystem.admin;
-import com.mycompany.javaprojectmanagementsystem.Student;
+import student.Student;
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -395,7 +396,7 @@ public class login extends javax.swing.JFrame {
                 String fileUsername = userData[0];
                 String filePassword = userData[1];
                 if (enteredUsername.equals(fileUsername) && enteredPassword.equals(filePassword)) {
-                    name = userData[2]; // Name is at index 2 for admin and lecturer
+                    name = userData[2]; // Name is at index 2 for admin and LecturerDashboard
                     validCredentials = true;
                     JOptionPane.showMessageDialog(null, "Login successful as " + role);
                     openRoleFrame(role, name); // Pass the name
@@ -420,7 +421,7 @@ public class login extends javax.swing.JFrame {
                 new admin(name).setVisible(true);
                 break;
             case "lecturer":
-                new lecturer(name).setVisible(true);
+                new LecturerDashboard(name).setVisible(true);
                 break;
             case "student":
                 new Student(name).setVisible(true);

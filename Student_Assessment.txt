@@ -1,4 +1,0 @@
-Internship Report, Internship, John Doe, Jane Smith, 3-2024, Artificial Inteligence 
-Investigation Report, Investigation, Alice Johnson, Bob Brown, 7-2024, Multimedia
-CP1, CP, Emily White, Jack Davis, 12-2024, Software Engineering
-CP2, CP, Olivia Clark, Samuel Wilson, 12-2024, Software Engineering

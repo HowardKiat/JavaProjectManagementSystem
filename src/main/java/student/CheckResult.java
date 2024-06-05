@@ -4,23 +4,94 @@
  */
 package student;
 
-import com.mycompany.javaprojectmanagementsystem.Student;
+import java.awt.BorderLayout;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.HashMap;
+import java.util.Map;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.OrientationRequested;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 /**
  *
  * @author User
  */
 public class CheckResult extends javax.swing.JFrame {
     private final String studentName;
+    private final String filePath = "submitted_report.txt";
+
     /**
      * Creates new form CheckResult
      * @param name
      */
     public CheckResult(String name) {
+        super();
         this.studentName = name;
         initComponents();
-        profileField.setText(studentName);
+        setSize(1300, 700);
+        java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (screenSize.width - getWidth()) / 2;
+        int y = (screenSize.height - getHeight()) / 2;
+        setLocation(x, y);
+        profileField.setText(name);
         profileField.setEditable(false); 
+        displayResultData();
+    }
+    
+    private void displayResultData() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); 
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", "); 
+
+                if (parts.length >= 12) {
+                    if (parts[5].equals(profileField.getText())) {
+                        Object[] row = new Object[11];
+                        row[0] = parts[0]; 
+                        row[1] = parts[1]; 
+                        row[2] = parts[2]; 
+                        row[3] = parts[3]; 
+                        row[4] = parts[7]; 
+                        row[5] = parts[8]; 
+                        row[6] = parts[9]; 
+                        row[7] = parts[10]; 
+                        row[8] = parts[11]; 
+                        model.addRow(row);
+                    }
+                } else {
+                    // Handle invalid data format
+                    System.err.println("Invalid data format: " + line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error reading file: " + e.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -39,23 +110,28 @@ public class CheckResult extends javax.swing.JFrame {
         profileField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         backBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        printPdfBtn = new javax.swing.JButton();
+        searchField = new javax.swing.JTextField();
+        searchBtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        showGrade = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Course", "Intake", "GradeScore", "Grade", "Feedback"
+                "ProjectID", "ProjectName", "AssessmentType", "Filename", "SubmissionTime", "SubmittedDate", "Course", "Grade", "Feedback"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -63,6 +139,8 @@ public class CheckResult extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 1300, 200));
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 102));
 
@@ -84,7 +162,7 @@ public class CheckResult extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(98, 98, 98)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 785, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(profileField, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,51 +183,64 @@ public class CheckResult extends javax.swing.JFrame {
                         .addGap(21, 21, 21))))
         );
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, -1));
+
         backBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        backBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/back-icon.png"))); // NOI18N
         backBtn.setText("Back");
         backBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 backBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(backBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 510, 140, -1));
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Save Result To PDF");
+        printPdfBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        printPdfBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/print-icon.png"))); // NOI18N
+        printPdfBtn.setText("Print PDF");
+        printPdfBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printPdfBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(printPdfBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, 190, -1));
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 260, 176, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(157, 157, 157))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(309, 309, 309))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(backBtn)
-                        .addGap(350, 350, 350))))
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, -1, 22));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28)
-                .addComponent(backBtn)
-                .addContainerGap(30, Short.MAX_VALUE))
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 120, 520, 140));
+
+        showGrade.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/report-icon.png"))); // NOI18N
+        showGrade.setText("Show Grades");
+        showGrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showGradeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(showGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 510, 190, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void profileFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_profileFieldActionPerformed
@@ -159,6 +250,140 @@ public class CheckResult extends javax.swing.JFrame {
         sp.setVisible(true);
         dispose();
     }//GEN-LAST:event_backBtnActionPerformed
+
+    private void printPdfBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printPdfBtnActionPerformed
+        MessageFormat header = new MessageFormat(studentName + " Final Results");
+        MessageFormat footer = new MessageFormat("Page {0}");
+
+        try {
+            // Create a PrintRequestAttributeSet with desired settings (e.g., landscape orientation)
+            PrintRequestAttributeSet set = new HashPrintRequestAttributeSet();
+            set.add(OrientationRequested.LANDSCAPE);
+
+            // Print the JTable
+            boolean printed = jTable1.print(JTable.PrintMode.FIT_WIDTH, header, footer, true, set, true);
+            if (printed) {
+                JOptionPane.showMessageDialog(null, "Printing completed successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Printing failed.");
+            }
+        } catch (java.awt.print.PrinterException e) {
+            JOptionPane.showMessageDialog(null, "Error while printing:\n" + e.getMessage());
+        }
+        previewPdf();
+    }//GEN-LAST:event_printPdfBtnActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        String search = searchField.getText().toLowerCase();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+
+        if (!search.isEmpty()) {
+            RowFilter<Object, Object> rowFilter = RowFilter.regexFilter("(?i)" + search);
+            sorter.setRowFilter(rowFilter);
+        } else {
+            sorter.setRowFilter(null); 
+        }
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void showGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showGradeActionPerformed
+        displayGradeChart();
+    }//GEN-LAST:event_showGradeActionPerformed
+    
+    private void previewPdf() {
+        try {
+            // Create a temporary JPanel to contain the JTable content
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+            panel.add(jTable1.getTableHeader(), BorderLayout.NORTH);
+            panel.add(jTable1, BorderLayout.CENTER);
+
+            // Wait for the panel to be fully painted
+            panel.setSize(panel.getPreferredSize()); // Ensure the panel is properly sized
+            panel.validate();
+            panel.repaint();
+
+            System.out.println("Panel size: " + panel.getSize());
+
+            // Create a PDF document
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage();
+            document.addPage(page);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            // Convert the JPanel to an image
+            BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = image.createGraphics();
+            panel.printAll(g2d);
+            g2d.dispose();
+
+            // Add the image to the PDF document
+            PDImageXObject pdfImage = LosslessFactory.createFromImage(document, image);
+            contentStream.drawImage(pdfImage, 100, 100); // Adjust position as needed
+
+            contentStream.close();
+            document.save("output.pdf");
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "PDF saved successfully.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error while creating PDF:\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    private DefaultCategoryDataset createGradeDataset() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        Map<String, Integer> gradeCounts = new HashMap<>();
+
+        // Initialize counts
+        String[] grades = {"A+", "A", "B", "C", "D", "E", "F"};
+        for (String grade : grades) {
+            gradeCounts.put(grade, 0);
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(", ");
+                if (parts.length >= 12) {
+                    String grade = parts[10];
+                    if (gradeCounts.containsKey(grade)) {
+                        gradeCounts.put(grade, gradeCounts.get(grade) + 1);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error reading file: " + e.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        for (Map.Entry<String, Integer> entry : gradeCounts.entrySet()) {
+            dataset.addValue(entry.getValue(), "Grades", entry.getKey());
+        }
+
+        return dataset;
+    }
+    
+    
+    private void displayGradeChart() {
+        DefaultCategoryDataset dataset = createGradeDataset();
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Grades Distribution",
+                "Grade",
+                "Number of Students",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true, true, false);
+        
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(560, 367));
+        
+        jPanel2.setLayout(new BorderLayout());
+        jPanel2.add(chartPanel, BorderLayout.CENTER);
+        jPanel2.validate();
+    }
 
     /**
      * @param args the command line arguments
@@ -197,12 +422,16 @@ public class CheckResult extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton printPdfBtn;
     private javax.swing.JTextField profileField;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JTextField searchField;
+    private javax.swing.JButton showGrade;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,6 +6,8 @@ package com.mycompany.javaprojectmanagementsystem;
 
 import com.mycompany.javaprojectmanagementsystem.home;
 import com.mycompany.javaprojectmanagementsystem.home;
+import com.mycompany.javaprojectmanagementsystem.home;
+import com.mycompany.javaprojectmanagementsystem.home;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.io.BufferedReader;
@@ -31,21 +33,49 @@ import javax.swing.table.DefaultTableModel;
  */
 public class admin extends javax.swing.JFrame {
 
-    private final String adminName;
+    private final String adminUsername;
     /**
      * Creates new form admin
      */
     public admin(String name) {
-        this.adminName = name;
+        this.adminUsername = name;
         initComponents();
         loadDataFromFile("lecturer.txt", lecTable);
         loadDataFromFile("student.txt", stdTable);
-        jTextField1.setText(adminName);
         jTextField1.setEditable(false); // Make the text field non-editable
-
+        tfusername.setEditable(false);
+        tfemail.setEditable(false);
+        tfcontact.setEditable(false);
+        readAdminFileAndDisplayData("admin.txt");
 
     }
 
+    private void readAdminFileAndDisplayData(String fileName) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0 && parts[2].equals(adminUsername)) {
+                    // Assuming the row has adminEmail, email, otherField1, otherField2
+                    if (parts.length > 1) {
+                        jTextField1.setText(parts[2]);
+                    }
+                    if (parts.length > 2) {
+                        tfusername.setText(parts[2]);
+                    }
+                    if (parts.length > 3) {
+                        tfemail.setText(parts[0]);
+                    }
+                    if (parts.length > 3) {
+                        tfcontact.setText(parts[3]);
+                    }
+                    break; // Exit the loop after finding the matching email
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     private void saveDataToFile(JTable table, String filename) {
         try {
@@ -267,11 +297,11 @@ public class admin extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        email = new javax.swing.JLabel();
+        tfemail = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        username = new javax.swing.JLabel();
+        tfusername = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        phone = new javax.swing.JLabel();
+        tfcontact = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -417,7 +447,7 @@ public class admin extends javax.swing.JFrame {
         jTextField1.setForeground(new java.awt.Color(0, 204, 0));
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setBorder(null);
-        sidePanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        sidePanel.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 70, -1));
 
         mainPanel.add(sidePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 130, 600));
 
@@ -1723,71 +1753,68 @@ public class admin extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
-        email.setBackground(new java.awt.Color(255, 255, 255));
-        email.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        email.setText("jLabel33");
+        tfemail.setBackground(new java.awt.Color(255, 255, 255));
+        tfemail.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tfemail.setText("jTextField2");
+        tfemail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfemailActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+            .addComponent(tfemail, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(tfemail, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        username.setBackground(new java.awt.Color(255, 255, 255));
-        username.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        username.setText("jLabel33");
+        tfusername.setBackground(new java.awt.Color(255, 255, 255));
+        tfusername.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tfusername.setText("jTextField2");
+        tfusername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfusernameActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+            .addComponent(tfusername)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(username)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(tfusername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        phone.setBackground(new java.awt.Color(255, 255, 255));
-        phone.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        phone.setText("jLabel35");
+        tfcontact.setBackground(new java.awt.Color(255, 255, 255));
+        tfcontact.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        tfcontact.setText("jTextField2");
+        tfcontact.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfcontactActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(phone, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+            .addComponent(tfcontact)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(phone)
-                .addContainerGap())
+            .addComponent(tfcontact, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1796,14 +1823,14 @@ public class admin extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel34)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel33)
-                    .addComponent(jLabel32))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(jLabel32)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1812,15 +1839,15 @@ public class admin extends javax.swing.JFrame {
                 .addComponent(jLabel32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(76, 76, 76)
                 .addComponent(jLabel33)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addComponent(jLabel34)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addGap(86, 86, 86))
         );
 
         javax.swing.GroupLayout p5Layout = new javax.swing.GroupLayout(p5);
@@ -1835,7 +1862,7 @@ public class admin extends javax.swing.JFrame {
         p5Layout.setVerticalGroup(
             p5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, p5Layout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
         );
@@ -2010,6 +2037,7 @@ public class admin extends javax.swing.JFrame {
         // Define the filename and path where user data is stored
         String filename = "lecturer.txt"; // Change this to your desired filename
         boolean lecemailExists = false;
+        boolean lecusernameExists = false;
 
         try {
             // Create a FileReader to read from the text file
@@ -2021,10 +2049,16 @@ public class admin extends javax.swing.JFrame {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
                 String existinglecEmail = parts[0];
+                String existinglecUsername = parts[2]; // Assuming username is at index 2
 
                 if (existinglecEmail.equals(lecemail)) {
                     lecemailExists = true;
-                    break; // Email already exists, no need to check further
+                }
+                if (existinglecUsername.equals(lecusername)) {
+                    lecusernameExists = true;
+                }
+                if (lecemailExists || lecusernameExists) {
+                    break; // Email or username already exists, no need to check further
                 }
             }
 
@@ -2034,6 +2068,9 @@ public class admin extends javax.swing.JFrame {
             if (lecemailExists) {
                 // Display an error message if the email is already in use
                 JOptionPane.showMessageDialog(this, "Email already exists. Please choose a different email.");
+            } else if (lecusernameExists) {
+                // Display an error message if the username is already in use
+                JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
             } else {
                 // Create a FileWriter to write to the text file (true appends to the file)
                 FileWriter fileWriter = new FileWriter(filename, true);
@@ -2145,6 +2182,7 @@ public class admin extends javax.swing.JFrame {
         // Define the filename and path where user data is stored
         String filename = "student.txt"; // Change this to your desired filename
         boolean stdemailExists = false;
+        boolean stdusernameExists = false;
 
         try {
             // Create a FileReader to read from the text file
@@ -2156,10 +2194,17 @@ public class admin extends javax.swing.JFrame {
             while ((line = bufferedReader.readLine()) != null) {
                 String[] parts = line.split(",");
                 String existingstdEmail = parts[0];
+                String existingstdUsername = parts[3];
 
                 if (existingstdEmail.equals(stdemail)) {
                     stdemailExists = true;
-                    break; // Email already exists, no need to check further
+                }
+                if (existingstdUsername.equals(stdusername)) {
+                    stdusernameExists = true;
+                }
+
+                if (stdemailExists || stdusernameExists) {
+                    break; // Email or username already exists, no need to check further
                 }
             }
 
@@ -2704,6 +2749,18 @@ public class admin extends javax.swing.JFrame {
         stdContact2.setText(model.getValueAt(selectedRow, 4).toString());
     }//GEN-LAST:event_stdTable2MouseClicked
 
+    private void tfusernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfusernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfusernameActionPerformed
+
+    private void tfemailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfemailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfemailActionPerformed
+
+    private void tfcontactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcontactActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfcontactActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2755,7 +2812,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JButton backB9;
     private javax.swing.JPanel centrePanel;
     private javax.swing.JPanel dashboard;
-    private javax.swing.JLabel email;
     private javax.swing.JPanel header;
     private javax.swing.JPanel header1;
     private javax.swing.JPanel header2;
@@ -2880,7 +2936,6 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JPanel p2;
     private javax.swing.JPanel p3;
     private javax.swing.JPanel p5;
-    private javax.swing.JLabel phone;
     private javax.swing.JButton pmAssign;
     private javax.swing.JButton pmRemove;
     private javax.swing.JPanel removeLecturer;
@@ -2904,7 +2959,9 @@ public class admin extends javax.swing.JFrame {
     private javax.swing.JTextField stdUsername2;
     private javax.swing.JPanel student;
     private javax.swing.JTextField tfLecSearch;
-    private javax.swing.JLabel username;
+    private javax.swing.JTextField tfcontact;
+    private javax.swing.JTextField tfemail;
+    private javax.swing.JTextField tfusername;
     private javax.swing.JPanel viewProfile;
     // End of variables declaration//GEN-END:variables
 }

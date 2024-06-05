@@ -5,7 +5,6 @@
 package lecturer;
 
 import com.mycompany.javaprojectmanagementsystem.Presentation;
-import com.mycompany.javaprojectmanagementsystem.lecturer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -225,15 +224,15 @@ public class PresentationManager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(363, 363, 363)
-                        .addComponent(backBtn))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(135, 135, 135)
                         .addComponent(acceptBtn)
                         .addGap(102, 102, 102)
                         .addComponent(rejectBtn)
                         .addGap(97, 97, 97)
-                        .addComponent(viewSlot)))
+                        .addComponent(viewSlot))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(419, 419, 419)
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -247,38 +246,38 @@ public class PresentationManager extends javax.swing.JFrame {
                     .addComponent(acceptBtn)
                     .addComponent(rejectBtn)
                     .addComponent(viewSlot))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(backBtn)
-                .addGap(45, 45, 45))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        var sp = new lecturer(lecturerName);
+        var sp = new LecturerDashboard(lecturerName);
         sp.setVisible(true);
         dispose();
 
     }//GEN-LAST:event_backBtnActionPerformed
 
     private void acceptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBtnActionPerformed
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a row to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+    int selectedRow = jTable1.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a row to accept.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to ACCEPT this presentation?", "Confirm Accept", JOptionPane.YES_NO_OPTION);
-        if (response == JOptionPane.YES_OPTION) {
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setValueAt("Accepted", selectedRow, 10);  
-            
-            ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
-            Presentation presentation = presentations.get(selectedRow); 
-            presentation.setStatus("Accepted");
-            Presentation.writeToFile(presentations, filePath);
-        }
+    int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to ACCEPT this presentation?", "Confirm Accept", JOptionPane.YES_NO_OPTION);
+    if (response == JOptionPane.YES_OPTION) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setValueAt("Accepted", selectedRow, 10);  
+        
+        ArrayList<Presentation> presentations = Presentation.readFromFile(filePath);
+        Presentation presentation = presentations.get(selectedRow); 
+        presentation.setStatus("Accepted");
+        Presentation.writeToFile(presentations, filePath);
+    }
 
 
     }//GEN-LAST:event_acceptBtnActionPerformed

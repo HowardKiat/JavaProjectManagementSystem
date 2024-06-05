@@ -4,41 +4,54 @@
  */
 package Projectmanager;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import lecturer.LecturerDashboard;
 /**
  *
  * @author Darren
  */
 public class CreateProject extends javax.swing.JFrame {
     private List<Lecturer> lecturers;
-
+    private final String lecturerName;
     /**
      * Creates new form CreateProject
+     * @param name
      */
-public CreateProject() {
+public CreateProject(String name) {
+    this.lecturerName = name;
     initComponents(); // Initialize GUI components
+    LecturerTextField1.setText(name);
+    LecturerTextField1.setEditable(false);
     String filePath = "lecturer.txt"; // Use relative path (assuming the file is in the same directory as your Java files)
     lecturers = Lecturer.loadLecturersFromFile(filePath); // Load lecturers from file and assign them
-    populateSupervisorComboBox();
     populateSecondMarkerComboBox();
+    populateFirstMarkerComboBox();
+    populatesupervisorComboBox();
 }
+
 public static List<Lecturer> loadLecturersFromFile(String filePath) {
     List<Lecturer> lecturers = new ArrayList<>();
 
     try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         String line;
         while ((line = br.readLine()) != null) {
+            System.out.println("Read line: " + line); // Debugging: Print each line
             String[] data = line.split(",");
             if (data.length == 6) {
                 Lecturer lecturer = new Lecturer(data[0], data[1], data[2], data[3], data[4], data[5]);
                 lecturers.add(lecturer);
+            } else {
+                System.out.println("Skipping malformed line: " + line); // Log skipping malformed lines
             }
         }
     } catch (IOException e) {
@@ -57,32 +70,96 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
      */
     @SuppressWarnings("unchecked")
     
+private int getNextProjectId() {
+    String filePath = "Assessment_details.txt";
+    int maxId = 0;
 
-  private void populateSupervisorComboBox() {
-    SupervisorComboBox.removeAllItems(); // Clear existing items
-    for (Lecturer lecturer : lecturers) {
-        SupervisorComboBox.addItem(lecturer.getName());
-    }
-}    
-
-  private void populateSecondMarkerComboBox() {
-    SecondMarkerComboBox.removeAllItems(); // Clear existing items
-    for (Lecturer lecturer : lecturers) {
-        SecondMarkerComboBox.addItem(lecturer.getName());
-    }
-  }
-        private void saveProjectToFile(String projectName, String projectType, String supervisor, String secondMarker) {
-        String filePath = "Assessment_details.txt"; // File to save project details
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            String line = String.join(", ", projectName, projectType, supervisor, secondMarker);
-            writer.write(line);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Handle the exception (e.g., log the error, display a message to the user)
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(", ");
+            if (data.length > 0) {
+                try {
+                    int id = Integer.parseInt(data[0].trim()); // Trim spaces to avoid NumberFormatException
+                    if (id > maxId) {
+                        maxId = id;
+                    }
+                } catch (NumberFormatException e) {
+                    // Log and handle the exception
+                    System.err.println("Skipping malformed line: " + line);
+                }
+            }
         }
-}        
+    } catch (IOException e) {
+        e.printStackTrace();
+        // Handle the exception (e.g., log the error, display a message to the user)
+    }
+
+    return maxId + 1;
+}
+
+
+
+
+        private void populatesupervisorComboBox() {
+        jComboBoxsuper.removeAllItems(); // Clear existing items
+        jComboBoxsuper.addItem("None"); // Add "None" as the first item
+        for (Lecturer lecturer : lecturers) {
+            jComboBoxsuper.addItem(lecturer.getName());
+            }
+
+        }
+
+    
+        private void populateFirstMarkerComboBox() {
+            FirstMarkerComboBox.removeAllItems(); // Clear existing items
+            FirstMarkerComboBox.addItem("None"); // Add "None" as the first item
+            for (Lecturer lecturer : lecturers) {
+                FirstMarkerComboBox.addItem(lecturer.getName());
+            }
+        }
+
+
+        private void populateSecondMarkerComboBox() {
+            SecondMarkerComboBox.removeAllItems(); // Clear existing items
+            SecondMarkerComboBox.addItem("None"); // Add "None" as the first item
+            for (Lecturer lecturer : lecturers) {
+                SecondMarkerComboBox.addItem(lecturer.getName());
+            }
+        }
+
+  
+        private String getSelectedDate(JDateChooser dateChooser) {
+            Date date = dateChooser.getDate();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            return date != null ? dateFormat.format(date) : "-";
+        }
+
+        // Method to save the project details to a file
+        private void saveProjectToFile(String projectName, String projectType, String supervisor, String firstMarker, String secondMarker) {
+            String filePath = "Assessment_details.txt"; // File to save project details
+            int newId = getNextProjectId(); // Get the next project ID
+
+            // Get the selected dates from jdatechooser1 and jdatechooser2
+            String selectedDate1 = getSelectedDate(jDateChooser1);
+            String selectedDate2 = getSelectedDate(jDateChooser2);
+
+            // Format the new line with placeholders for missing data
+        String line = String.format("%d, %s, %s, %s, %s, -, -, -, %s, %s, %s, Pending, Pending, -",
+        newId, projectName, projectType, firstMarker, secondMarker,supervisor, selectedDate1, selectedDate2);
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
+                writer.write(line);
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+                // Handle the exception (e.g., log the error, display a message to the user)
+            }
+        }
+
+
+
+     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -95,11 +172,18 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
         jLabel5 = new javax.swing.JLabel();
         projectTypeField = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        SupervisorComboBox = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         SecondMarkerComboBox = new javax.swing.JComboBox<>();
         Createbtn = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        FirstMarkerComboBox = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBoxsuper = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        LecturerTextField1 = new javax.swing.JTextField();
 
         jLabel2.setText("jLabel2");
 
@@ -109,40 +193,32 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
 
         jPanel1.setBackground(new java.awt.Color(218, 228, 230));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         jLabel1.setText("CREATE PROJECT");
 
-        ProjNameTextField2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        ProjNameTextField2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("Project Name:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("Project Type:");
 
-        projectTypeField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        projectTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Internship Report", "Investigation Report", "Course Project", "Final Year Project" }));
+        projectTypeField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        projectTypeField.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Internship Report", "Investigation Report", "RMCP", "Capstone project – P1", "Course Project", "Final Year Project" }));
         projectTypeField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 projectTypeFieldActionPerformed(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Supervisor:");
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel6.setText("End Date:");
 
-        SupervisorComboBox.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        SupervisorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        SupervisorComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SupervisorComboBoxActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("Second Marker:");
 
-        SecondMarkerComboBox.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        SecondMarkerComboBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         SecondMarkerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         SecondMarkerComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,73 +248,133 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
             }
         });
 
+        FirstMarkerComboBox.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        FirstMarkerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel8.setText("First Marker:");
+        jLabel8.setToolTipText("");
+
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel9.setText("Supervisor:");
+        jLabel9.setToolTipText("");
+
+        jComboBoxsuper.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBoxsuper.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel10.setText("Start Date:");
+
+        LecturerTextField1.setText("jTextField1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ProjNameTextField2)
-                    .addComponent(projectTypeField, 0, 204, Short.MAX_VALUE)
-                    .addComponent(SupervisorComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(SecondMarkerComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(37, 37, 37))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel3)
+                        .addGap(44, 44, 44)
+                        .addComponent(ProjNameTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel5)
+                        .addGap(44, 44, 44)
+                        .addComponent(projectTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jLabel9)
+                        .addGap(44, 44, 44)
+                        .addComponent(jComboBoxsuper, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel8)
+                        .addGap(44, 44, 44)
+                        .addComponent(FirstMarkerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(172, 172, 172)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(154, 154, 154)
                         .addComponent(Createbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel10))
+                                .addGap(42, 42, 42)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(SecondMarkerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(112, 112, 112)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LecturerTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jLabel1)
-                .addGap(37, 37, 37)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(LecturerTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ProjNameTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel5)
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel6)
-                        .addGap(40, 40, 40)
-                        .addComponent(jLabel7))
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(projectTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(ProjNameTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(projectTypeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(SupervisorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(SecondMarkerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel9))
+                    .addComponent(jComboBoxsuper, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel8))
+                    .addComponent(FirstMarkerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel7))
+                    .addComponent(SecondMarkerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addComponent(Createbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,32 +393,64 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
         // TODO add your handling code here:
     }//GEN-LAST:event_projectTypeFieldActionPerformed
 
-    private void SupervisorComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SupervisorComboBoxActionPerformed
-        // TODO add your handling code here:    
-
-    }//GEN-LAST:event_SupervisorComboBoxActionPerformed
-
     private void CreatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreatebtnActionPerformed
-        // TODO add your handling code here:
+        // Get the input values from the text fields and combo boxes
         String projectName = ProjNameTextField2.getText(); 
         String projectType = (String) projectTypeField.getSelectedItem();
-        String selectedSupervisor = (String) SupervisorComboBox.getSelectedItem();
+        String selectedsupervisor = (String) jComboBoxsuper.getSelectedItem();        
+        String selectedFirstMarker = (String) FirstMarkerComboBox.getSelectedItem();        
         String selectedSecondMarker = (String) SecondMarkerComboBox.getSelectedItem();
-        saveProjectToFile(projectName, projectType, selectedSupervisor, selectedSecondMarker);
+        
+                    // Validate dates from JDateChooser components
+            Date startDate = jDateChooser1.getDate();
+            Date endDate = jDateChooser2.getDate();
+            if (startDate == null || endDate == null) {
+                JOptionPane.showMessageDialog(this, "Please select both start and end dates.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Stop execution if start or end date is not selected
+            }
+            if (endDate.before(startDate)) {
+                JOptionPane.showMessageDialog(this, "End date cannot be before start date.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Stop execution if end date is before start date
+            }
+        if (selectedsupervisor.equals(selectedFirstMarker) && !selectedsupervisor.equals("None")) {
+            JOptionPane.showMessageDialog(this, "Please select different lecturers for each combo box.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if same lecturer selected in different combo boxes
+        }
+
+        if (selectedsupervisor.equals(selectedSecondMarker) && !selectedsupervisor.equals("None")) {
+            JOptionPane.showMessageDialog(this, "Please select different lecturers for each combo box.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if same lecturer selected in different combo boxes
+        }
+
+        if (selectedFirstMarker.equals(selectedSecondMarker) && !selectedFirstMarker.equals("None")) {
+            JOptionPane.showMessageDialog(this, "Please select different lecturers for each combo box.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if same lecturer selected in different combo boxes
+        }
+        // Perform validation
+        if (projectName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a project name.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if project name is empty
+        }
+
+        if (projectType == null || selectedsupervisor == null || selectedFirstMarker == null || selectedSecondMarker == null) {
+            JOptionPane.showMessageDialog(this, "Please select all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if any required field is not selected
+        }
+
+        // Proceed with saving the project details and showing success message
+        saveProjectToFile(projectName, projectType, selectedsupervisor, selectedFirstMarker, selectedSecondMarker);
+        JOptionPane.showMessageDialog(this, "Project successfully created!");
+
     
-        JOptionPane.showMessageDialog(this, "Registration successful! Data saved to ");
-
-
-        new ProjectManager().setVisible(true);
+        new AssignAssesment(lecturerName).setVisible(true);
          dispose();
 
     }//GEN-LAST:event_CreatebtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        new ProjectManager().setVisible(true);
-         dispose();
-        
+        var sp = new LecturerDashboard(lecturerName);
+        sp.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -314,24 +482,31 @@ public static List<Lecturer> loadLecturersFromFile(String filePath) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CreateProject().setVisible(true);
+                new CreateProject("Name").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Createbtn;
+    private javax.swing.JComboBox<String> FirstMarkerComboBox;
+    private javax.swing.JTextField LecturerTextField1;
     private javax.swing.JTextField ProjNameTextField2;
     private javax.swing.JComboBox<String> SecondMarkerComboBox;
-    private javax.swing.JComboBox<String> SupervisorComboBox;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxsuper;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> projectTypeField;
     // End of variables declaration//GEN-END:variables
